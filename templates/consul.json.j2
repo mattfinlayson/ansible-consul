@@ -1,0 +1,16 @@
+{
+{% if consul_is_ui %}
+  "ui_dir": "{{ consul_home }}/dist",
+  "client_addr": "{{ ansible_default_ipv4['address'] }}",
+{% endif %}
+  "data_dir": "{{ consul_home }}/data",
+  "log_level": "{{ consul_log_level }}",
+  "node_name": "{{ consul_node_name }}",
+  "server": {{ consul_is_server }},
+  "bind_addr": "{{ consul_bind_address }}",
+  "datacenter": "{{ consul_datacenter }}",
+  "start_join": {{ consul_servers|to_nice_json }},
+  "rejoin_after_leave": {{ consul_rejoin_after_leave }},
+  "bootstrap": {{ consul_bootstrap }}
+}
+

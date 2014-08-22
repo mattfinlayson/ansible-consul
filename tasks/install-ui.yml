@@ -1,0 +1,11 @@
+- name: download consul
+  get_url: "url={{consul_ui_download}} dest={{consul_download_folder}}"
+  register: consul_ui_was_downloaded
+
+- name: Extract consul ui
+  command: "unzip -o {{consul_download_folder}}/{{consul_ui_archive}} -d {{consul_home}}"
+  when: consul_ui_was_downloaded|changed
+
+- name: set Ownership
+  file: "state=directory path={{consul_ui_dir}} owner={{consul_user}} group={{consul_group}} recurse=yes"
+  when: consul_ui_was_downloaded|changed

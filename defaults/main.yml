@@ -1,0 +1,23 @@
+---
+consul_version: 0.3.1
+consul_archive: "{{ consul_version }}_linux_amd64.zip"
+consul_ui_archive: "{{ consul_version }}_web_ui.zip"
+consul_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_archive }}"
+consul_ui_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_ui_archive }}"
+consul_download_folder: /tmp
+consul_home: /opt/consul
+consul_config_dir: /etc/consul.d
+consul_config_file: /etc/consul.conf
+consul_log_file: /var/log/consul
+consul_data_dir: "{{ consul_home }}/data"
+consul_ui_dir: "{{ consul_home }}/dist"
+consul_binary: consul
+consul_user: consul
+consul_group: consul
+consul_is_server: "false"
+consul_is_ui: "false"
+consul_servers: ['127.0.0.1']
+consul_bootstrap: "false"
+consul_log_level: "INFO"
+consul_rejoin_after_leave: "true"
+

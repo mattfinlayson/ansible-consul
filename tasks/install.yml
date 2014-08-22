@@ -1,0 +1,48 @@
+---
+- name: install deps
+  apt: pkg='{{item}}' state=installed
+  with_items:
+    - unzip
+    - jq
+
+- name: download consul
+  get_url: url={{consul_download}} dest={{consul_download_folder}}
+  register: consul_was_downloaded
+
+- name: create consul directory
+  file: "state=directory path={{consul_home}}"
+
+- name: create consul data directory
+  file: "state=directory path={{consul_home}}/data"
+
+- name: create consul bin directory
+  file: "state=directory path={{consul_home}}/bin"
+
+- name: create consul conf directory
+  file: "state=directory path={{ consul_config_dir }}"
+
+- name: extract consul binary
+  command: "unzip -o {{consul_download_folder}}/{{consul_archive}} -d {{consul_home}}/bin creates={{consul_home}}/bin/bin"
+  when: consul_was_downloaded|changed
+
+- name: create Consul Group
+  group: "name={{consul_group}} state=present"
+
+- name: create Consul User
+  user: "name={{consul_user}} group={{consul_group}}"
+
+- name: set Ownership
+  file: "state=directory path={{consul_home}} owner={{consul_user}} group={{consul_group}} recurse=yes"
+  when: consul_was_downloaded|changed
+
+- name: copy consul upstart script
+  template: "src=consul.conf.j2 dest=/etc/init/consul.conf owner={{consul_user}} group={{consul_group}} mode=0755"
+
+- name: add consul to path through profile.d
+  template: "src=consul.sh.j2 dest=/etc/profile.d/consul.sh owner=root group=root mode=0755"
+
+- name: copy consulkv script
+  template: "src=consulkv.j2 dest={{consul_home}}/bin/consulkv owner={{consul_user}} group={{consul_group}} mode=0755"
+
+- name: consul config file
+  template: "src=consul.json.j2 dest={{ consul_config_file }} owner={{consul_user}} group={{consul_group}} mode=0755"

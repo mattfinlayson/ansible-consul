@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Matthew Finlayson
+  description: Installs and configures consul
+  company: Jive Software
+  platforms:
+    - name: Ubuntu
+      versions:
+        - All
+  categories:
+    - system
+dependencies: []

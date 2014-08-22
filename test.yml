@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  roles:
+    - ansible-consul
+  vars:
+    consul_is_ui: "true"
+    consul_is_server: "true"
+    consul_datacenter: "test"
+    #consul_node_name: "{{ ansible_ec2_public_ipv4 }}"
+    consul_bootstrap: "true"
+    consul_node_name: "vagrant"
+    consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
+    
