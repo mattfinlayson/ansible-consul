@@ -1,9 +1,0 @@
-# Consul Agent (Upstart unit)
-description "Consul Agent"
-start on (local-filesystems and net-device-up IFACE!=lo)
-stop on runlevel [06]
-
-exec sudo -u consul -g consul /usr/lib/consul/bin/consul agent -config-dir /etc/consul.d -config-file=/etc/consul.conf >> /var/log/consul 2>&1
-respawn
-respawn limit 10 10
-kill timeout 10

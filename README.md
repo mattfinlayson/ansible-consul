@@ -15,7 +15,7 @@
 Using `ansible-galaxy`:
 
 ```
-$ ansible-galaxy install savagegus.ansible-consul
+$ ansible-galaxy install savagegus.consul
 ```
 
 Using `arm` ([Ansible Role Manager](https://github.com/mirskytech/ansible-role-manager/)):
