@@ -6,4 +6,7 @@
     - python-dev
 
 - name: install python module consulate
-  pip: name=consulate
+  pip: name={{ item }}
+  with_items:
+    - tornado
+    - consulate
