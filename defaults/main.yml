@@ -22,4 +22,4 @@ consul_log_level: "INFO"
 consul_rejoin_after_leave: "true"
 consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
 consul_node_name: "{{ ansible_default_ipv4['address'] }}"
-
+consul_datacenter: "default"

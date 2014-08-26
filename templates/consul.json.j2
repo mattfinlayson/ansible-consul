@@ -1,7 +1,6 @@
 {
-{% if consul_is_ui %}
+{% if consul_is_ui == 'true' %}
   "ui_dir": "{{ consul_home }}/dist",
-  "client_addr": "{{ ansible_default_ipv4['address'] }}",
 {% endif %}
 {% if consul_bootstrap == 'false' %}
   "start_join": {{ consul_servers|to_nice_json }},
