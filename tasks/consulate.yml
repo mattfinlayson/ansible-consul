@@ -1,12 +1,15 @@
 ---
 - name: install deps
-  apt: pkg='{{item}}' state=installed
+  apt: >
+    pkg={{item}}
+    state=installed
   with_items:
     - python-pip
     - python-dev
 
 - name: install python module consulate
-  pip: name={{ item }}
+  pip: >
+    name={{item}}
   with_items:
     - tornado
     - consulate

@@ -7,7 +7,23 @@
     consul_is_ui: true
     consul_is_server: true
     consul_datacenter: "test"
-    #consul_node_name: "{{ ansible_ec2_public_ipv4 }}"
     consul_bootstrap: true
     consul_node_name: "vagrant"
-    consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
+    nginx_remove_default: yes
+    htpasswd:
+      - name: admin
+        users:
+          - { name: admin, password: admin }
+    nginx_sites:
+      - id: consul
+        add_webroot: no
+        name: consul.local
+        rules:
+          - gzip
+          - security
+        auth:
+          name: Consul
+          file: admin
+        proxy_pass:
+          location: '/'
+          target: 'http://127.0.0.1:8500'
