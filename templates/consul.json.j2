@@ -5,6 +5,7 @@
 {% if consul_bootstrap == false %}
   "start_join": {{ consul_servers|to_nice_json }},
 {% endif %}
+  "domain": "{{ consul_domain }}",
   "data_dir": "{{ consul_home }}/data",
   "log_level": "{{ consul_log_level }}",
   "node_name": "{{ consul_node_name }}",

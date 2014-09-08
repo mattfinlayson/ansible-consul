@@ -14,6 +14,7 @@ consul_ui_dir: "{{ consul_home }}/dist"
 consul_binary: consul
 consul_user: consul
 consul_group: consul
+consul_domain: consul.
 consul_is_server: false
 consul_is_ui: false
 consul_servers: ['127.0.0.1']
