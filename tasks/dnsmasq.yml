@@ -5,7 +5,7 @@
 
 - name: configure dnsmasq
   copy: >
-    content='server=/consul/127.0.0.1#8600' 
+    content='server=/{{ consul_domain }}/127.0.0.1#8600'
     dest=/etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
