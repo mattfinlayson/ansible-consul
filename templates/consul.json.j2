@@ -8,6 +8,9 @@
   "domain": "{{ consul_domain }}",
   "data_dir": "{{ consul_home }}/data",
   "log_level": "{{ consul_log_level }}",
+{% if consul_syslog %}
+  "enable_syslog": true,
+{% endif %}
   "node_name": "{{ consul_node_name }}",
   "server": {{ "true" if consul_is_server else "false" }},
   "client_addr": "{{ consul_client_address }}",
