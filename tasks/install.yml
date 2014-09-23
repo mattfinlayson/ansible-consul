@@ -1,4 +1,9 @@
 ---
+- name: update apt
+  apt: >
+  update_cache=yes
+  cache_valid_time=3600
+ 
 - name: install deps
   apt: >
     pkg={{item}}
@@ -9,13 +14,13 @@
 
 - name: download consul
   get_url: >
-    url={{consul_download}} 
+    url={{consul_download}}
     dest={{consul_download_folder}}
   register: consul_was_downloaded
 
 - name: create consul directory
   file: >
-    state=directory 
+    state=directory
     path={{ item }}
   with_items:
     - "{{ consul_home }}"
@@ -33,37 +38,37 @@
 
 - name: create consul group
   group: >
-    name={{consul_group}} 
+    name={{consul_group}}
     state=present
 
 - name: create consul user
   user: >
-    name={{consul_user}} 
+    name={{consul_user}}
     group={{consul_group}}
 
 - name: set ownership
   file: >
-    state=directory 
-    path={{consul_home}} 
-    owner={{consul_user}} 
-    group={{consul_group}} 
+    state=directory
+    path={{consul_home}}
+    owner={{consul_user}}
+    group={{consul_group}}
     recurse=yes
   when: consul_was_downloaded|changed
 
 - name: copy consul upstart script
   template: >
-    src=consul.conf.j2 
-    dest=/etc/init/consul.conf 
-    owner={{consul_user}} 
-    group={{consul_group}} 
+    src=consul.conf.j2
+    dest=/etc/init/consul.conf
+    owner={{consul_user}}
+    group={{consul_group}}
     mode=0755
 
 - name: add consul to path through profile.d
   template: >
-    src=consul.sh.j2 
-    dest=/etc/profile.d/consul.sh 
-    owner=root 
-    group=root 
+    src=consul.sh.j2
+    dest=/etc/profile.d/consul.sh
+    owner=root
+    group=root
     mode=0755
 
 - name: copy consulkv script

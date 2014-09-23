@@ -1,4 +1,9 @@
 ---
+- name: update apt
+  apt: >
+  update_cache=yes
+  cache_valid_time=3600
+
 - name: install deps
   apt: >
     pkg={{item}}
