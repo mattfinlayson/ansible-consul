@@ -17,6 +17,10 @@ server {
 
   location / {
       proxy_pass http://127.0.0.1:8500;
+      {%- if consul_ui_require_auth -%}
+      auth_basic "Restricted";
+      auth_basic_user_file {{ consul_ui_auth_user_file }};
+      {% endif %}
   }
 
 
