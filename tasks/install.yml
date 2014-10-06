@@ -33,7 +33,6 @@
     src={{ consul_download_folder }}/{{ consul_archive }}
     dest={{ consul_home }}/bin
     copy=no
-    creates={{consul_home}}/bin/consul
   when: consul_was_downloaded|changed
 
 - name: create consul group

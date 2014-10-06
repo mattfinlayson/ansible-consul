@@ -9,7 +9,6 @@
     src={{ consul_download_folder }}/{{ consul_ui_archive }}
     dest={{ consul_home }}
     copy=no
-    creates={{consul_home}}/dist/index.html
   when: consul_ui_was_downloaded|changed
 
 - name: set ownership
