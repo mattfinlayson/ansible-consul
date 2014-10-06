@@ -1,6 +1,6 @@
 ---
 - include: install.yml
-- { include: install-ui.yml, when: consul_is_server == true }
+- { include: install-ui.yml, when: consul_is_ui == true }
 - include: dnsmasq.yml
 - include: consulate.yml
 - include: service.yml

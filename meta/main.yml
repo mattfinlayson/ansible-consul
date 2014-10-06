@@ -10,4 +10,4 @@ galaxy_info:
   categories:
     - system
 dependencies:
-  - franklinkim.nginx
+  - { role: franklinkim.nginx, when: consul_is_ui == true }

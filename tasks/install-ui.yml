@@ -20,3 +20,30 @@
     group={{consul_group}}
     recurse=yes
   when: consul_ui_was_downloaded|changed
+
+- name: consul nginx config
+  template: >
+    src=consul-nginx.conf.j2
+    dest=/etc/nginx/sites-available/consul
+    owner=root
+    group=root
+    mode=0755
+
+- name: consul nginx config
+  file: >
+    state=link
+    src=/etc/nginx/sites-available/consul
+    path=/etc/nginx/sites-enabled/consul
+    owner=root
+    group=root
+    mode=0755
+
+- name: create nginx home
+  file: >
+    state=directory
+    path=/var/www/consul/htdocs
+    owner=root
+    group=root
+    mode=0755
+  notify:
+    - restart nginx
