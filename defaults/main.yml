@@ -18,7 +18,6 @@ consul_domain: consul.
 consul_is_server: false
 consul_is_ui: false
 consul_servers: ['127.0.0.1']
-consul_bootstrap: false
 consul_log_level: "INFO"
 consul_syslog: false
 consul_rejoin_after_leave: true
