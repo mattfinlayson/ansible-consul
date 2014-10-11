@@ -93,6 +93,7 @@
     owner=root
     group=root
     mode=0755
+  when: consul_is_ui
 
 - name: consul config file
   file: >
@@ -102,6 +103,7 @@
     owner=root
     group=root
     mode=0755
+  when: consul_is_ui
 
 - name: create nginx home
   file: >
@@ -110,5 +112,6 @@
     owner=root
     group=root
     mode=0755
+  when: consul_is_ui
   notify:
     - restart nginx
