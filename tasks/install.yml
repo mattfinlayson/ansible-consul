@@ -3,14 +3,25 @@
   apt: >
     update_cache=yes
     cache_valid_time=3600
+  when: ansible_os_family == "Debian"
 
-- name: install deps
+- name: install deps (Ubuntu)
   apt: >
     pkg={{item}}
     state=installed
   with_items:
     - unzip
     - jq
+  when: ansible_os_family == "Debian"
+
+- name: install deps (RHEL)
+  yum: >
+    pkg={{item}}
+    state=installed
+  with_items:
+    - unzip
+    - jq
+  when: ansible_os_family == "RedHat"
 
 - name: download consul
   get_url: >
@@ -52,7 +63,6 @@
     owner={{consul_user}}
     group={{consul_group}}
     recurse=yes
-  when: consul_was_downloaded|changed
 
 - name: copy consul upstart script
   template: >

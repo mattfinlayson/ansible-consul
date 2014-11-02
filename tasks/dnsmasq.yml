@@ -2,11 +2,31 @@
   apt: >
     update_cache=yes
     cache_valid_time=3600
+  when: ansible_os_family == "Debian"
 
-- name: install deps
+- name: install deps (Ubuntu)
   apt: >
     pkg=dnsmasq
     state=installed
+  when: ansible_os_family == "Debian"
+
+- name: install deps (RHEL)
+  yum: >
+    pkg=dnsmasq
+    state=installed
+  when: ansible_os_family == "RedHat"
+
+- name: ensure configure directory
+  file: dest=/etc/dnsmasq.d state=directory
+
+- name: ensure dnsmasq configuration
+  lineinfile: dest="/etc/dnsmasq.conf" 
+              regexp="^#conf-dir=/etc/dnsmasq.conf"
+              line="conf-dir=/etc/dnsmasq.d" 
+              state=present
+
+- name: add local dns lookup
+  lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolv.conf"
 
 - name: configure dnsmasq
   copy: >
@@ -14,3 +34,6 @@
     dest=/etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
+
+- name: ensure dnsmasq running
+  service: name=dnsmasq state=running

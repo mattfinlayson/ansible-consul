@@ -7,7 +7,8 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - All
+    - name: EL
+      versions:
+        - 6
   categories:
     - system
-dependencies:
-  - { role: franklinkim.nginx, when: consul_is_ui == true }

@@ -27,7 +27,7 @@
     owner=root
     group=root
     mode=0755
-  when: consul_is_ui
+  when: consul_enable_nginx_config
   notify:
     - restart nginx  
 
@@ -39,7 +39,7 @@
     owner=root
     group=root
     mode=0755
-  when: consul_is_ui and consul_enable_nginx_config
+  when: consul_enable_nginx_config
   notify:
   - restart nginx
 
@@ -52,3 +52,4 @@
     mode=0755
   notify:
     - restart nginx
+  when: consul_enable_nginx_config
