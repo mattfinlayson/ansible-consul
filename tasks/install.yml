@@ -26,6 +26,7 @@
     - "{{ consul_home }}"
     - "{{ consul_home }}/data"
     - "{{ consul_home }}/bin"
+    - "{{ consul_data_dir }}"
     - "{{ consul_config_dir }}"
 
 - name: copy and unpack
