@@ -9,7 +9,7 @@
   "disable_remote_exec": {{ "true" if consul_disable_remote_exec else "false" }},
 {% endif %}
   "domain": "{{ consul_domain }}",
-  "data_dir": "{{ consul_home }}/data",
+  "data_dir": "{{ consul_data_dir }}",
   "log_level": "{{ consul_log_level }}",
 {% if consul_syslog %}
   "enable_syslog": true,
@@ -34,5 +34,5 @@
 {% if consul_watches is defined %}
   "watches": {{ consul_watches|to_nice_json }},
 {% endif %}
-"rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }}
+  "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }}
 }
