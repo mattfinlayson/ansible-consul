@@ -59,6 +59,7 @@ consul_is_server: "false"
 consul_is_ui: "false"
 # configure consul to start in bootstrap mode
 consul_bootstrap: "false"
+consul_bootstrap_expect: 3
 # configure service
 consul_servers: ['127.0.0.1']
 consul_log_level: "INFO"
