@@ -14,7 +14,9 @@
 {% if consul_syslog %}
   "enable_syslog": true,
 {% endif %}
+{% if consul_node_name is defined %}
   "node_name": "{{ consul_node_name }}",
+{% endif %}
   "server": {{ "true" if consul_is_server else "false" }},
   "client_addr": "{{ consul_client_address }}",
   "bind_addr": "{{ consul_bind_address }}",
