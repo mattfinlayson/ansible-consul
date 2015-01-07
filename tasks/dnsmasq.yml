@@ -25,8 +25,11 @@
               line="conf-dir=/etc/dnsmasq.d" 
               state=present
 
+- name: ensure configure directory
+  file: dest=/etc/resolvconf/resolv.conf.d state=directory
+
 - name: add local dns lookup
-  lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolv.conf"
+  lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolvconf/resolv.conf.d/consul"
 
 - name: configure dnsmasq
   copy: >
