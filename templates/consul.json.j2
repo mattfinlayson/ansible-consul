@@ -37,6 +37,6 @@
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }},
 {% if consul_encrypt is defined %}
-  "encrypt": {{ consul_encrypt }}
+  "encrypt": "{{ consul_encrypt }}"
 {% endif %}
 }
