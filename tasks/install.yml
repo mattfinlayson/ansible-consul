@@ -12,11 +12,16 @@
     - unzip
     - jq
 
+- name: check archive existance
+  stat: path={{consul_download_folder}}/{{consul_archive}}
+  register: archive_downloaded
+
 - name: download consul
   get_url: >
     url={{consul_download}}
     dest={{consul_download_folder}}
   register: consul_was_downloaded
+  when: not archive_downloaded 
 
 - name: create consul directory
   file: >
@@ -48,11 +53,13 @@
 - name: set ownership
   file: >
     state=directory
-    path={{consul_home}}
+    path={{ item }}
     owner={{consul_user}}
     group={{consul_group}}
     recurse=yes
-  when: consul_was_downloaded|changed
+  with_items:
+    - "{{ consul_data_dir }}"
+    - "{{ consul_home }}"
 
 - name: copy consul upstart script
   template: >
