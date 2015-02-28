@@ -21,6 +21,7 @@ consul_servers: ['127.0.0.1']
 consul_log_level: "INFO"
 consul_syslog: false
 consul_rejoin_after_leave: true
+consul_leave_on_terminate: false
 consul_bind_address: "0.0.0.0"
 consul_client_address: "127.0.0.1"
 consul_datacenter: "default"

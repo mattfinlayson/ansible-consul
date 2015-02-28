@@ -64,6 +64,7 @@ consul_bootstrap_expect: 3
 consul_servers: ['127.0.0.1']
 consul_log_level: "INFO"
 consul_rejoin_after_leave: "true"
+consul_leave_on_terminate: "false"
 ```
 
 An instance might be defined through:
@@ -81,6 +82,8 @@ consul_bootstrap: "true"
 consul_node_name: "vagrant"
 # bind to ip
 consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
+# encrypt using string from consul keygen
+consul_encrypt: "X4SYOinf2pTAcAHRhpj7dA=="
 ```
 
 ## Handlers
