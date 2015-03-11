@@ -1,7 +1,7 @@
 # Consul Agent (Upstart unit)
 description "Consul Agent"
 start on (local-filesystems and net-device-up IFACE!=lo)
-stop on runlevel [06]
+stop on runlevel [016]
 
 exec sudo -u {{ consul_user }} -g {{ consul_group }} {{ consul_home }}/bin/consul agent -config-dir {{ consul_config_dir }} -config-file={{ consul_config_file }} >> {{ consul_log_file }} 2>&1
 respawn

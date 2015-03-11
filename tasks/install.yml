@@ -18,10 +18,22 @@
     dest={{consul_download_folder}}
   register: consul_was_downloaded
 
+- name: create consul group
+  group: >
+    name={{consul_group}}
+    state=present
+
+- name: create consul user
+  user: >
+    name={{consul_user}}
+    group={{consul_group}}
+
 - name: create consul directory
   file: >
     state=directory
     path={{ item }}
+    owner={{consul_user}}
+    group={{consul_group}}
   with_items:
     - "{{ consul_home }}"
     - "{{ consul_home }}/bin"
@@ -34,16 +46,6 @@
     dest={{ consul_home }}/bin
     copy=no
   when: consul_was_downloaded|changed
-
-- name: create consul group
-  group: >
-    name={{consul_group}}
-    state=present
-
-- name: create consul user
-  user: >
-    name={{consul_user}}
-    group={{consul_group}}
 
 - name: set ownership
   file: >
