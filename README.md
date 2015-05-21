@@ -118,6 +118,13 @@ $ cd ansible-consul
 $ vagrant up
 ```
 
+or use the TestKitchen tests
+
+```
+$ bundle
+$ bundle exec kitchen test
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests and examples for any new or changed functionality.
 

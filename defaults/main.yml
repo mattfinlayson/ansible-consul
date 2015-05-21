@@ -23,6 +23,7 @@ consul_syslog: false
 consul_rejoin_after_leave: true
 consul_leave_on_terminate: false
 consul_bind_address: "0.0.0.0"
+consul_dynamic_bind: false
 consul_client_address: "127.0.0.1"
 consul_datacenter: "default"
 consul_ui_server_name: "{{ ansible_fqdn }}"
