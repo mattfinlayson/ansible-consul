@@ -17,3 +17,4 @@ platforms:
 
 suites:
   - name: dynamic_binding
+  - name: default
