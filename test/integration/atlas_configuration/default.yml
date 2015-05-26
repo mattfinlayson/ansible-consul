@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+
+  roles:
+    - { role: ansible-consul, consul_is_server: true,
+        consul_atlas_infrastructure: 'test_infrastructure',
+        consul_atlas_join: true,
+        consul_atlas_token: "a_fake_token_value" }

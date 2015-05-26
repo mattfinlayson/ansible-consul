@@ -41,6 +41,13 @@
 {% if consul_encrypt is defined %}
   "encrypt": "{{ consul_encrypt }}",
 {% endif %}
+{% if consul_atlas_infrastructure is defined and consul_atlas_infrastructure %}
+  "atlas_infrastructure": "{{ consul_atlas_infrastructure }}",
+  "atlas_token": "{{ consul_atlas_token }}",
+  {% if consul_atlas_join is defined %}
+  "atlas_join": true
+  {% endif %}
+{% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
 }

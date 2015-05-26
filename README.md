@@ -34,7 +34,7 @@ $ git clone https://github.com/jivesoftware/ansible-consul.git
 
 Here is a list of all the default variables for this role, which are also available in `defaults/main.yml`.
 
-```
+```yml
 # default version and download locations
 consul_version: 0.3.1
 consul_archive: "{{ consul_version }}_linux_amd64.zip"
@@ -69,7 +69,7 @@ consul_leave_on_terminate: "false"
 
 An instance might be defined through:
 
-```
+```yml
 # enable ui
 consul_is_ui: "true"
 # start as a server
@@ -84,6 +84,16 @@ consul_node_name: "vagrant"
 consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
 # encrypt using string from consul keygen
 consul_encrypt: "X4SYOinf2pTAcAHRhpj7dA=="
+```
+
+## Atlas Variables
+
+```yml
+consul_atlas_infrastructure: "your_infrastructure_name"
+consul_atlas_token: "your_consul_token"
+
+# if you want to use Atlas autodiscovery for clustering
+consul_atlas_join: true
 ```
 
 ## Handlers

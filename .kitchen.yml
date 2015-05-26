@@ -16,5 +16,6 @@ platforms:
       box_url: https://atlas.hashicorp.com/ubuntu/trusty64
 
 suites:
-  - name: dynamic_binding
+  - name: atlas_configuration
   - name: default
+  - name: dynamic_binding
