@@ -1,9 +1,26 @@
 # Consul Agent (Upstart unit)
 description "Consul Agent"
+
 start on (local-filesystems and net-device-up IFACE!=lo)
 stop on runlevel [016]
 
-exec sudo -u {{ consul_user }} -g {{ consul_group }} {{ consul_home }}/bin/consul agent -config-dir {{ consul_config_dir }} -config-file={{ consul_config_file }} >> {{ consul_log_file }} 2>&1
+script
+
+{% if consul_dynamic_bind %}
+# Get the public IP
+BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
+{% endif %}
+
+exec sudo -u {{ consul_user }} -g {{ consul_group }} {{ consul_home }}/bin/consul agent \
+{% if consul_dynamic_bind %}
+  -bind=$BIND \
+{% endif %}
+  -config-dir {{ consul_config_dir }} \
+  -config-file={{ consul_config_file }} \
+  >> {{ consul_log_file }} 2>&1
+end script
+
 respawn
 respawn limit 10 10
+
 kill timeout 10

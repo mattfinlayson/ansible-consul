@@ -54,3 +54,6 @@ docs/_build/
 
 # Vagrant
 .vagrant
+
+.kitchen/
+roles/*

@@ -115,7 +115,16 @@ These are the handlers that are defined in `handlers/main.yml`.
 ```
 $ git clone https://github.com/jivesoftware/ansible-consul.git
 $ cd ansible-consul
+$ ansible-galaxy install --role-file=requirements.yml --roles-path=roles --force
 $ vagrant up
+```
+
+or use the TestKitchen tests
+
+```
+$ bundle
+$ rm -rf roles
+$ bundle exec kitchen test
 ```
 
 ## Contributing
