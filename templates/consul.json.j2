@@ -45,7 +45,7 @@
   "atlas_infrastructure": "{{ consul_atlas_infrastructure }}",
   "atlas_token": "{{ consul_atlas_token }}",
   {% if consul_atlas_join is defined %}
-  "atlas_join": true
+  "atlas_join": true,
   {% endif %}
 {% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
