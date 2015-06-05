@@ -6,6 +6,9 @@ stop on runlevel [016]
 
 script
 
+# Make sure to use all our CPUs, because Consul can block a scheduler thread
+export GOMAXPROCS=`nproc`
+
 {% if consul_dynamic_bind %}
 # Get the public IP
 BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
