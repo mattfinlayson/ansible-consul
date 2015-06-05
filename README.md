@@ -60,6 +60,9 @@ consul_is_ui: "false"
 # configure consul to start in bootstrap mode
 consul_bootstrap: "false"
 consul_bootstrap_expect: 3
+# configure consul to join an existing cluster
+# note: no default available - behaves as "false" if not present, though
+consul_join_at_start: ~ 
 # configure service
 consul_servers: ['127.0.0.1']
 consul_log_level: "INFO"
