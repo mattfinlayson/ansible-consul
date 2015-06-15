@@ -41,6 +41,26 @@
 {% if consul_encrypt is defined %}
   "encrypt": "{{ consul_encrypt }}",
 {% endif %}
+{% if consul_is_server and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined %}
+   "cert_file": "{{ consul_cert_file }}",
+   "key_file": "{{ consul_key_file }}",
+   "ca_file": "{{ consul_ca_file }}",
+   "verify_incoming": true,
+   "verify_outgoing": true,
+   "port": { 
+           "https": 443,
+           "http": -1
+           }
+{% endif %}
+{% if consul_cert_file is defined and consul_key_file is defined %}
+   "cert_file": "{{ consul_cert_file }}",
+   "key_file": "{{ consul_key_file }}",
+   "verify_outgoing": true,
+   "port": { 
+           "https": 443,
+           "http": -1
+           }
+{% endif %}
 {% if consul_atlas_infrastructure is defined and consul_atlas_infrastructure %}
   "atlas_infrastructure": "{{ consul_atlas_infrastructure }}",
   "atlas_token": "{{ consul_atlas_token }}",

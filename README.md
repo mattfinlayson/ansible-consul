@@ -89,6 +89,14 @@ consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
 consul_encrypt: "X4SYOinf2pTAcAHRhpj7dA=="
 ```
 
+## Enable TLS encryption
+
+```yml
+consul_cert_file: "your_certificate_file",
+consul_key_file: "your_key_file",
+consul_ca_file: "your_CA_file",
+```
+
 ## Atlas Variables
 
 ```yml
