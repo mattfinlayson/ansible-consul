@@ -2,5 +2,5 @@
 - include: install.yml
 - { include: install-ui.yml, when: consul_is_ui == true }
 - { include: dnsmasq.yml, when: consul_install_dnsmasq == true }
-- include: consulate.yml
+- { include: consulate.yml, when: consul_install_consulate == true }
 - include: service.yml

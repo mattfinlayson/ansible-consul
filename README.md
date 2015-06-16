@@ -1,14 +1,14 @@
 # Ansible Consul Role
 
-> `consul` is an [ansible](http://www.ansible.com) role which: 
-> 
-> * installs consul
-> * configures consul
-> * installs consul ui
-> * configures consul ui
-> * optionally installs dnsmasq
-> * optionally install consulate
-> * configures consul service(s)
+`consul` is an [ansible](http://www.ansible.com) role which:
+
+ * installs consul
+ * configures consul
+ * installs consul ui
+ * configures consul ui
+ * optionally installs dnsmasq
+ * optionally install consulate
+ * configures consul service(s)
 
 ## Installation
 
@@ -35,39 +35,48 @@ $ git clone https://github.com/jivesoftware/ansible-consul.git
 Here is a list of all the default variables for this role, which are also available in `defaults/main.yml`.
 
 ```yml
-# default version and download locations
-consul_version: 0.3.1
+consul_version: 0.5.2
 consul_archive: "{{ consul_version }}_linux_amd64.zip"
-consul_ui_archive: "{{ consul_version }}_web_ui.zip"
 consul_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_archive }}"
-consul_ui_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_ui_archive }}"
-# default directories
 consul_download_folder: /tmp
+
+consul_is_ui: false
+consul_ui_archive: "{{ consul_version }}_web_ui.zip"
+consul_ui_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_ui_archive }}"
+consul_ui_dir: "{{ consul_home }}/dist"
+consul_ui_server_name: "{{ ansible_fqdn }}"
+consul_ui_require_auth: false
+consul_ui_auth_user_file: /etc/htpasswd/consul
+consul_enable_nginx_config: true
+
 consul_home: /opt/consul
 consul_config_dir: /etc/consul.d
 consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
-consul_ui_dir: "{{ consul_home }}/dist"
+
 consul_binary: consul
-# default settings
+
 consul_user: consul
 consul_group: consul
-# configure consul as a server
-consul_is_server: "false"
-# configure consul as a ui
-consul_is_ui: "false"
-# configure consul to start in bootstrap mode
-consul_bootstrap: "false"
-consul_bootstrap_expect: 3
-# configure consul to join an existing cluster
-# note: no default available - behaves as "false" if not present, though
-consul_join_at_start: ~ 
-# configure service
+
+consul_is_server: false
+
+consul_domain: consul.
+
 consul_servers: ['127.0.0.1']
 consul_log_level: "INFO"
-consul_rejoin_after_leave: "true"
-consul_leave_on_terminate: "false"
+consul_syslog: false
+consul_rejoin_after_leave: true
+consul_leave_on_terminate: false
+consul_bind_address: "0.0.0.0"
+consul_dynamic_bind: false
+consul_client_address: "127.0.0.1"
+consul_datacenter: "default"
+consul_disable_remote_exec: true
+
+consul_install_dnsmasq: true
+consul_install_consulate: false
 ```
 
 An instance might be defined through:
