@@ -5,7 +5,7 @@ GEM
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     highline (1.7.2)
-    kitchen-ansible (0.0.16)
+    kitchen-ansible (0.0.17)
       librarian-ansible
       test-kitchen
     kitchen-vagrant (0.18.0)
@@ -59,7 +59,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  kitchen-ansible (~> 0.0.15)
+  kitchen-ansible (~> 0.0.17)
   kitchen-vagrant
   serverspec
   test-kitchen

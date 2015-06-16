@@ -100,10 +100,27 @@ consul_encrypt: "X4SYOinf2pTAcAHRhpj7dA=="
 
 ## Enable TLS encryption
 
+See [https://www.consul.io/docs/agent/encryption.html](https://www.consul.io/docs/agent/encryption.html) for details.
+
+These files will be created on your Consul host:
+
 ```yml
-consul_cert_file: "your_certificate_file",
-consul_key_file: "your_key_file",
-consul_ca_file: "your_CA_file",
+consul_cert_file: "{{ consul_home }}/cert/ca.crt",
+consul_key_file: "{{ consul_home }}/cert/consul.key",
+consul_ca_file: "{{ consul_home }}/cert/consul.crt",
+```
+
+When you provide these vars. You should use Ansible Vault to encrypt these vars or perhaps pass them on the command line.
+
+```yml
+consul_tls_cert: |
+  CERT CONTENTS HERE
+
+consul_tls_key: |
+  KEY CONTENTS HERE
+
+consul_tls_ca_cert: |
+  CERT CONTENTS HERE
 ```
 
 ## Atlas Variables

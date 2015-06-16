@@ -37,6 +37,7 @@
   with_items:
     - "{{ consul_home }}"
     - "{{ consul_home }}/bin"
+    - "{{ consul_home }}/cert"
     - "{{ consul_data_dir }}"
     - "{{ consul_config_dir }}"
 
@@ -46,6 +47,21 @@
     dest={{ consul_home }}/bin
     copy=no
   when: consul_was_downloaded|changed
+
+- name: create TLS key
+  no_log: True
+  copy: content="{{ consul_tls_key }}" dest="{{ consul_key_file }}" owner={{consul_user}} group={{consul_group}}
+  when: consul_tls_key is defined
+
+- name: create TLS cert
+  no_log: True
+  copy: content="{{ consul_tls_cert }}" dest="{{ consul_cert_file }}" owner={{consul_user}} group={{consul_group}}
+  when: consul_tls_cert is defined
+
+- name: create TLS root CA cert
+  no_log: True
+  copy: content="{{ consul_tls_ca_cert }}" dest="{{ consul_ca_file }}" owner={{consul_user}} group={{consul_group}}
+  when: consul_tls_ca_cert is defined
 
 - name: set ownership
   file: >
