@@ -68,6 +68,27 @@
   "atlas_join": true,
   {% endif %}
 {% endif %}
+{% if consul_acl_datacenter is defined %}
+  "acl_datacenter": "{{ consul_acl_datacenter }}",
+{% endif %}
+{% if consul_acl_default_policy is defined %}
+  "acl_default_policy": "{{ consul_acl_default_policy }}",
+{% endif %}
+{% if consul_acl_down_policy is defined %}
+  "acl_down_policy": "{{ consul_acl_down_policy }}",
+{% endif %}
+{% if consul_acl_master_token is defined %}
+  "acl_master_token": "{{ consul_acl_master_token }}",
+{% endif %}
+{% if consul_acl_token is defined %}
+  "acl_token": "{{ consul_acl_token }}",
+{% endif %}
+{% if consul_acl_ttl is defined %}
+  "acl_ttl": "{{ consul_acl_ttl }}",
+{% endif %}
+{% if consul_atlas_acl_token is defined %}
+  "atlas_acl_token": "{{ consul_atlas_acl_token }}",
+{% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
 }
