@@ -75,7 +75,7 @@ consul_client_address: "127.0.0.1"
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
-consul_install_dnsmasq: true
+consul_install_dnsmasq: false
 consul_install_consulate: false
 ```
 
