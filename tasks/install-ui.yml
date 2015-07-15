@@ -1,10 +1,10 @@
-- name: download consul
+- name: download consul ui
   get_url: >
     url={{consul_ui_download}}
     dest={{consul_download_folder}}
   register: consul_ui_was_downloaded
 
-- name: copy and unpack
+- name: copy and unpack ui
   unarchive: >
     src={{ consul_download_folder }}/{{ consul_ui_archive }}
     dest={{ consul_home }}
