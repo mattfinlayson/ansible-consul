@@ -2,6 +2,8 @@
 consul_version: 0.5.2
 consul_archive: "{{ consul_version }}_linux_amd64.zip"
 consul_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_archive }}"
+consul_jq_bin: "{{ consul_download_folder }}/jq"
+consul_jq_download: "http://stedolan.github.io/jq/download/linux{{ ansible_userspace_bits }}/jq"
 consul_download_folder: /tmp
 
 consul_is_ui: false
