@@ -14,7 +14,7 @@ export GOMAXPROCS=`nproc`
 BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
 {% endif %}
 
-exec sudo -u {{ consul_user }} -g {{ consul_group }} {{ consul_home }}/bin/consul agent \
+sudo setcap CAP_NET_BIND_SERVICE=+eip /opt/consul/bin/consul; exec sudo -u {{ consul_user }} -g {{ consul_group }} {{ consul_home }}/bin/consul agent \
 {% if consul_dynamic_bind %}
   -bind=$BIND \
 {% endif %}
