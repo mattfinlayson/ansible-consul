@@ -42,6 +42,6 @@ describe 'Consul with TLS enabled' do
 
   describe file('/etc/init/consul.conf') do
     it { should be_file }
-    its(:content) { should match /sudo setcap CAP_NET_BIND_SERVICE=+eip \/opt\/consul\/bin\/consul/ }
+    its(:content) { should match /sudo setcap CAP_NET_BIND_SERVICE=\+eip \/opt\/consul\/bin\/consul; exec sudo -u consul -g consul \/opt\/consul\/bin\/consul agent \\/ }
   end
 end
