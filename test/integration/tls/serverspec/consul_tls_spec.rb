@@ -11,6 +11,7 @@ describe 'Consul with TLS enabled' do
     describe file("/opt/consul/cert/#{file}") do
       it { should be_file }
       it { should be_owned_by('consul') }
+      it { should be_mode 600 }
     end
   end
 
