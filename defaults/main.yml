@@ -23,6 +23,8 @@ consul_binary: consul
 
 consul_user: consul
 consul_group: consul
+consul_use_systemd: false
+consul_use_upstart: false
 
 consul_is_server: false
 
