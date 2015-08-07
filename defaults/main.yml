@@ -39,5 +39,13 @@ consul_client_address: "127.0.0.1"
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
+consul_port_dns: -1
+consul_port_http: -1
+consul_port_https: 443
+consul_port_rpc: 8400
+consul_port_serf_lan: 8301
+consul_port_serf_wan: 8302
+consul_port_server: 8300
+
 consul_install_dnsmasq: false
 consul_install_consulate: false
