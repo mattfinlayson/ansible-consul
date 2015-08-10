@@ -21,6 +21,7 @@ platforms:
 suites:
   - name: acls
   - name: atlas_configuration
+  - name: custom_templates
   - name: default
   - name: dynamic_binding
   - name: tls

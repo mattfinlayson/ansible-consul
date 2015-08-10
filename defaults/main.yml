@@ -18,6 +18,7 @@ consul_config_dir: /etc/consul.d
 consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
+consul_upstart_template: "consul.conf.j2"
 
 consul_binary: consul
 

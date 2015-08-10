@@ -89,7 +89,7 @@
 
 - name: copy consul upstart script
   template: >
-    src=consul.conf.j2
+    src={{consul_upstart_template}}
     dest=/etc/init/consul.conf
     owner={{consul_user}}
     group={{consul_group}}
