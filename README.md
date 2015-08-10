@@ -142,7 +142,7 @@ These are the handlers that are defined in `handlers/main.yml`.
 
 ## Example playbook
 
-```
+```yml
 ---
 
 - hosts: all
