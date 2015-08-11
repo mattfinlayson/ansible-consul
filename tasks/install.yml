@@ -27,6 +27,7 @@
   user: >
     name={{consul_user}}
     group={{consul_group}}
+    system=yes
 
 - name: create consul directory
   file: >
