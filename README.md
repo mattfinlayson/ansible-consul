@@ -83,15 +83,15 @@ An instance might be defined through:
 
 ```yml
 # enable ui
-consul_is_ui: "true"
+consul_is_ui: true
 # start as a server
-consul_is_server: "true"
+consul_is_server: true
 # name datacenter
-consul_datacenter: "test"
+consul_datacenter: test
 # bootstrap
-consul_bootstrap: "true"
+consul_bootstrap: true
 # name the node
-consul_node_name: "vagrant"
+consul_node_name: vagrant
 # bind to ip
 consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
 # encrypt using string from consul keygen
