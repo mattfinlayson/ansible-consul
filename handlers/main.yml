@@ -1,5 +1,8 @@
 ---
 - name: restart consul
   action: service name=consul state=restarted
+- name: reload systemd
+  sudo: yes
+  command: systemctl daemon-reload
 - name: restart dnsmasq
   service: name=dnsmasq state=restarted enabled=yes

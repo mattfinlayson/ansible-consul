@@ -1,0 +1,15 @@
+[Unit]
+Description=Consul Agent
+
+[Service]
+{% if consul_dynamic_bind %}
+# Get the public IP and set BIND Environment Var
+Environment="BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`"
+{% endif %}
+Environment="GOMAXPROCS=`nproc`"
+User={{ consul_user }}
+Group={{ consul_group }}
+ExecStart={{ consul_home }}/bin/consul agent {% if consul_dynamic_bind %} -bind=$BIND {% endif %} -config-dir {{ consul_config_dir }} -config-file={{ consul_config_file }} >> {{ consul_log_file }} 2>&1
+
+[Install]
+WantedBy=multi-user.target
