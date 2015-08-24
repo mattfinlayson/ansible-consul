@@ -47,11 +47,12 @@
   "ca_file": "{{ consul_ca_file }}",
   "verify_incoming": true,
   "verify_outgoing": true,
-{% if consul_is_server == false and consul_cert_file is defined and consul_key_file is defined %}
+{% endif %}
+{% if consul_is_server == false and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined %}
   "cert_file": "{{ consul_cert_file }}",
   "key_file": "{{ consul_key_file }}",
+  "ca_file": "{{ consul_ca_file }}",
   "verify_outgoing": true,
-{% endif %}
 {% endif %}
   "ports": {
     "dns": {{ consul_port_dns }},

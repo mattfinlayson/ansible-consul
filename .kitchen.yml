@@ -25,3 +25,4 @@ suites:
   - name: default
   - name: dynamic_binding
   - name: tls
+  - name: tls_client
