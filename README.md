@@ -72,6 +72,7 @@ consul_leave_on_terminate: false
 consul_bind_address: "0.0.0.0"
 consul_dynamic_bind: false
 consul_client_address: "127.0.0.1"
+consul_client_address_bind: false
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
