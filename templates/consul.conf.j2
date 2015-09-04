@@ -14,7 +14,7 @@ export GOMAXPROCS=`nproc`
 BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
 {% endif %}
 
-% if consul_client_address_bind %}
+{% if consul_client_address_bind %}
 # Get the public IP
 CLIENT_BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
 {% endif %}
