@@ -43,7 +43,7 @@ consul_client_address_bind: false
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
-consul_port_dns: -1
+consul_port_dns: 8600
 consul_port_http: -1
 consul_port_https: 443
 consul_port_rpc: 8400

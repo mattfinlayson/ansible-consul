@@ -23,6 +23,7 @@ suites:
   - name: atlas_configuration
   - name: custom_templates
   - name: default
+  - name: dns
   - name: dynamic_binding
   - name: tls
   - name: tls_client
