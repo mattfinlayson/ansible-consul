@@ -134,6 +134,14 @@ consul_atlas_token: "your_consul_token"
 consul_atlas_join: true
 ```
 
+## Other Variables
+
+```yml
+# if you Consul to send metrics to a statsd instance
+consul_statsd_address: "127.0.0.1"
+```
+
+
 ## Handlers
 
 These are the handlers that are defined in `handlers/main.yml`.

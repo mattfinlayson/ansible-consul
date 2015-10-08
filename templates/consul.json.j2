@@ -97,6 +97,9 @@
 {% if consul_atlas_acl_token is defined %}
   "atlas_acl_token": "{{ consul_atlas_acl_token }}",
 {% endif %}
+{% if consul_statsd_address is defined %}
+  "statsd_addr": "{{ consul_statsd_address }}",
+{% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
 }
