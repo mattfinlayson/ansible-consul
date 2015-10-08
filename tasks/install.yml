@@ -95,6 +95,21 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0755
+  when: consul_use_upstart
+  notify:
+    - restart consul
+
+- name: copy consul systemd script
+  template: >
+    src=consul.systemd.j2
+    dest=/etc/systemd/system/consul.service
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0755
+  when: consul_use_systemd
+  notify:
+    - reload systemd
+    - restart consul
 
 - name: add consul to path through profile.d
   template: >

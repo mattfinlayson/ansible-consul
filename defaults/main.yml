@@ -24,6 +24,8 @@ consul_binary: consul
 
 consul_user: consul
 consul_group: consul
+consul_use_systemd: false
+consul_use_upstart: true
 
 consul_is_server: false
 
@@ -37,12 +39,18 @@ consul_leave_on_terminate: false
 consul_bind_address: "0.0.0.0"
 consul_dynamic_bind: false
 consul_client_address: "127.0.0.1"
+consul_client_address_bind: false
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
 consul_port_dns: 8600
+<<<<<<< HEAD
 consul_port_http: 8500
 consul_port_https: -1
+=======
+consul_port_http: -1
+consul_port_https: 443
+>>>>>>> upstream/master
 consul_port_rpc: 8400
 consul_port_serf_lan: 8301
 consul_port_serf_wan: 8302

@@ -72,6 +72,7 @@ consul_leave_on_terminate: false
 consul_bind_address: "0.0.0.0"
 consul_dynamic_bind: false
 consul_client_address: "127.0.0.1"
+consul_client_address_bind: false
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
@@ -105,9 +106,9 @@ See [https://www.consul.io/docs/agent/encryption.html](https://www.consul.io/doc
 These files will be created on your Consul host:
 
 ```yml
-consul_cert_file: "{{ consul_home }}/cert/ca.crt",
+consul_cert_file: "{{ consul_home }}/cert/consul.crt",
 consul_key_file: "{{ consul_home }}/cert/consul.key",
-consul_ca_file: "{{ consul_home }}/cert/consul.crt",
+consul_ca_file: "{{ consul_home }}/cert/ca.crt",
 ```
 
 When you provide these vars. You should use Ansible Vault to encrypt these vars or perhaps pass them on the command line.

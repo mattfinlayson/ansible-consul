@@ -7,6 +7,8 @@ provisioner:
   ansible_verbose: true
   ansible_verbosity: 3
   requirements_path: requirements.yml
+  require_chef_for_busser: false
+  require_ruby_for_busser: true
   hosts: all
 
 verifier:
@@ -23,5 +25,7 @@ suites:
   - name: atlas_configuration
   - name: custom_templates
   - name: default
+  - name: dns
   - name: dynamic_binding
   - name: tls
+  - name: tls_client
