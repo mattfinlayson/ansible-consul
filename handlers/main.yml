@@ -3,7 +3,7 @@
   action: service name=consul state=restarted
 - name: reload consul config
   sudo: yes
-  commmand: pkill -1 consul
+  command: pkill -1 consul
 - name: reload systemd
   sudo: yes
   command: systemctl daemon-reload
