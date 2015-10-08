@@ -10,7 +10,12 @@
     state=installed
   with_items:
     - unzip
-    - jq
+
+- name: download jq
+  get_url: >
+    url={{consul_jq_download}}
+    dest={{consul_jq_bin}}
+  register: jq_was_downloaded
 
 - name: download consul
   get_url: >

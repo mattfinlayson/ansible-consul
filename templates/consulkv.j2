@@ -6,10 +6,10 @@ CONSUL="http://127.0.0.1:8500"
 main() {
   case "$1" in
     info)
-      curl -s "$CONSUL/v1/kv/$2" | jq -r .[]
+      curl -s "$CONSUL/v1/kv/$2" | {{consul_jq_bin}} -r .[]
       ;;
     get)
-      curl -s "$CONSUL/v1/kv/$2" | jq -r .[].Value | base64 -d | sed 's/$/\n/'
+      curl -s "$CONSUL/v1/kv/$2" | {{consul_jq_bin}} -r .[].Value | base64 -d | sed 's/$/\n/'
       ;;
     set)
       curl -s -X PUT -d "$3" "$CONSUL/v1/kv/$2" > /dev/null
@@ -19,9 +19,9 @@ main() {
       ;;
     ls)
       if [[ "$2" == "" ]]; then
-        curl -s "$CONSUL/v1/kv/?keys" | jq -r .[]
+        curl -s "$CONSUL/v1/kv/?keys" | {{consul_jq_bin}} -r .[]
       else
-        curl -s "$CONSUL/v1/kv/$2/?keys" | jq -r .[] | sed "s|$2/||"
+        curl -s "$CONSUL/v1/kv/$2/?keys" | {{consul_jq_bin}} -r .[] | sed "s|$2/||"
       fi
       ;;
   esac
