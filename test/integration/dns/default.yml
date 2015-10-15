@@ -5,4 +5,5 @@
     - { role: ansible-consul,
         consul_is_server: true,
         consul_install_dnsmasq: true,
-        consul_port_dns: 8200 }
+        consul_port_dns: 8200,
+        consul_client_address: "127.0.1.1" }

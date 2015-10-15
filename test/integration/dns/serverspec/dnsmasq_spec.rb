@@ -8,7 +8,7 @@ describe 'dnsmasq' do
 
   describe file('/etc/dnsmasq.d/10-consul') do
     it { should be_file }
-    its(:content) { should match /server=\/consul.\/127.0.0.1#8200/ }
+    its(:content) { should match /server=\/consul.\/127.0.1.1#8200/ }
   end
 
   describe file('/etc/dnsmasq.conf') do
