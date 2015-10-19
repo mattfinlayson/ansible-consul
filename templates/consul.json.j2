@@ -100,6 +100,12 @@
 {% if consul_statsd_address is defined %}
   "statsd_addr": "{{ consul_statsd_address }}",
 {% endif %}
+{% if consul_statsite_address is defined %}
+  "statsite_addr": "{{ consul_statsite_address }}",
+{% endif %}
+{% if consul_statsite_prefix is defined %}
+  "statsite_prefix": "{{ consul_statsite_prefix }}",
+{% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
 }
