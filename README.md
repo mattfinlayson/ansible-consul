@@ -143,7 +143,7 @@ consul_statsd_address: "127.0.0.1:8125"
 # if you want Consul to send metrics to a statsite instance
 consul_statsite_address: "127.0.0.1:8125"
 # this sets the prefix consul uses for all metrics
-statsite_prefix: "consul"
+consul_statsite_prefix: "consul"
 ```
 
 
