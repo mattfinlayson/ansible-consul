@@ -2,6 +2,8 @@
 consul_version: 0.5.2
 consul_archive: "{{ consul_version }}_linux_amd64.zip"
 consul_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_archive }}"
+consul_download_username: ""
+consul_download_password: ""
 consul_download_folder: /tmp
 
 consul_is_ui: false

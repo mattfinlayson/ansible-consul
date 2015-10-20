@@ -16,6 +16,8 @@
   get_url: >
     url={{consul_download}}
     dest={{consul_download_folder}}
+    url_username={{ consul_download_username }}
+    url_password={{ consul_download_password }}
   register: consul_was_downloaded
 
 - name: create consul group
