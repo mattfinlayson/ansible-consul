@@ -134,11 +134,16 @@ consul_atlas_token: "your_consul_token"
 consul_atlas_join: true
 ```
 
-## Other Variables
+## Telemetry Variables
+Consul has excellent [telemetry support](https://www.consul.io/docs/agent/telemetry.html). To enable it, use any of the following variables:
 
 ```yml
-# if you Consul to send metrics to a statsd instance
-consul_statsd_address: "127.0.0.1"
+# if you want Consul to send metrics to a statsd instance
+consul_statsd_address: "127.0.0.1:8125"
+# if you want Consul to send metrics to a statsite instance
+consul_statsite_address: "127.0.0.1:8125"
+# this sets the prefix consul uses for all metrics
+consul_statsite_prefix: "consul"
 ```
 
 
