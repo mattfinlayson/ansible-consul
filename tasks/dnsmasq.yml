@@ -26,3 +26,4 @@
     dest=/etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
+- pause: minutes=1
