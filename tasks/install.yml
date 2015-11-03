@@ -12,6 +12,10 @@
     - unzip
     - jq
 
+- name: check archive stat
+  stat: path={{ consul_download_folder }}/{{ consul_archive }}
+  register: consul_archive_stat
+
 - name: download consul
   get_url: >
     url={{consul_download}}
@@ -19,6 +23,7 @@
     url_username={{ consul_download_username }}
     url_password={{ consul_download_password }}
   register: consul_was_downloaded
+  when: consul_archive_stat.stat.exists == False
 
 - name: create consul group
   group: >
