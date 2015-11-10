@@ -11,14 +11,23 @@ provisioner:
   require_ruby_for_busser: true
   hosts: all
 
-verifier:
-  ruby_bindir: '/usr/bin'
-
 platforms:
   - name: trusty64
     driver_config:
       box: ubuntu/trusty64
       box_url: https://atlas.hashicorp.com/ubuntu/trusty64
+    verifier:
+      ruby_bindir: '/usr/bin'
+
+  - name: centos7
+    provisioner:
+      ansible_yum_repo: http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+      require_chef_for_busser: true
+      require_ruby_for_busser: false
+      extra_vars:
+        consul_use_systemd: true
+    driver_config:
+      box: puppetlabs/centos-7.0-64-nocm
 
 suites:
   - name: acls

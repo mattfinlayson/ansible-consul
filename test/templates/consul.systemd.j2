@@ -1,8 +1,9 @@
 [Unit]
-Description=Consul Agent
+Description=Consul Agent Custom SystemD
 
 [Service]
 Environment="GOMAXPROCS=`nproc`"
+Environment="FOO=bar"
 User={{ consul_user }}
 Group={{ consul_group }}
 ExecStart={{ consul_home }}/bin/consul agent -config-dir {{ consul_config_dir }} -config-file={{ consul_config_file }} >> {{ consul_log_file }} 2>&1

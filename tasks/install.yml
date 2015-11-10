@@ -112,13 +112,13 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0755
-  when: consul_use_upstart
+  when: consul_use_upstart and ansible_os_family == "Debian"
   notify:
     - restart consul
 
 - name: copy consul systemd script
   template: >
-    src=consul.systemd.j2
+    src={{consul_systemd_template}}
     dest=/etc/systemd/system/consul.service
     owner={{consul_user}}
     group={{consul_group}}

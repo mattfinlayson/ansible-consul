@@ -20,12 +20,15 @@ consul_config_dir: /etc/consul.d
 consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
+
 consul_upstart_template: "consul.conf.j2"
+consul_systemd_template: "consul.systemd.j2"
 
 consul_binary: consul
 
 consul_user: consul
 consul_group: consul
+
 consul_use_systemd: false
 consul_use_upstart: true
 

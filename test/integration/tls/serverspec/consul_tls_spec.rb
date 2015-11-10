@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Consul with TLS enabled' do
-  
+
   describe file('/opt/consul/cert') do
     it { should be_directory }
     it { should be_owned_by('consul') }
@@ -41,8 +41,10 @@ describe 'Consul with TLS enabled' do
     it { should be_running }
   end
 
-  describe file('/etc/init/consul.conf') do
-    it { should be_file }
-    its(:content) { should match /sudo setcap CAP_NET_BIND_SERVICE=\+eip \/opt\/consul\/bin\/consul; exec sudo -u consul -g consul \/opt\/consul\/bin\/consul agent \\/ }
+  if ['debian', 'ubuntu'].include?(os[:family])
+    describe file('/etc/init/consul.conf') do
+      it { should be_file }
+      its(:content) { should match /sudo setcap CAP_NET_BIND_SERVICE=\+eip \/opt\/consul\/bin\/consul; exec sudo -u consul -g consul \/opt\/consul\/bin\/consul agent \\/ }
+    end
   end
 end

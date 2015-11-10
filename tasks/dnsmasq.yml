@@ -29,7 +29,7 @@
   file: dest=/etc/resolvconf/resolv.conf.d state=directory
 
 - name: add local dns lookup
-  lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolvconf/resolv.conf.d/consul"
+  lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolvconf/resolv.conf.d/consul" create=yes
 
 - name: configure dnsmasq to listen on loopback interface only
   lineinfile:

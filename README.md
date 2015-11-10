@@ -151,8 +151,8 @@ consul_statsite_prefix: "consul"
 
 These are the handlers that are defined in `handlers/main.yml`.
 
-* `restart consul` 
-* `restart dnsmasq` 
+* `restart consul`
+* `restart dnsmasq`
 
 ## Example playbook
 
