@@ -9,6 +9,6 @@ galaxy_info:
         - All
     - name: EL
       versions:
-        - 6
+        - 7
   categories:
     - system
