@@ -34,7 +34,7 @@
     mode=0755
   when: consul_enable_nginx_config
   notify:
-    - restart nginx  
+    - restart nginx
 
 - name: consul nginx config
   file: >
