@@ -3,14 +3,25 @@
   apt: >
     update_cache=yes
     cache_valid_time=3600
+  when: ansible_os_family == "Debian"
 
-- name: install deps
+- name: install deps (Ubuntu)
   apt: >
     pkg={{item}}
     state=installed
   with_items:
     - unzip
     - jq
+  when: ansible_os_family == "Debian"
+
+- name: install deps (RHEL)
+  yum: >
+    pkg={{item}}
+    state=installed
+  with_items:
+    - unzip
+    - jq
+  when: ansible_os_family == "RedHat"
 
 - name: check archive stat
   stat: path={{ consul_download_folder }}/{{ consul_archive }}
@@ -93,7 +104,6 @@
     owner={{consul_user}}
     group={{consul_group}}
     recurse=yes
-  when: consul_was_downloaded|changed
 
 - name: copy consul upstart script
   template: >
@@ -102,13 +112,13 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0755
-  when: consul_use_upstart
+  when: consul_use_upstart and ansible_os_family == "Debian"
   notify:
     - restart consul
 
 - name: copy consul systemd script
   template: >
-    src=consul.systemd.j2
+    src={{consul_systemd_template}}
     dest=/etc/systemd/system/consul.service
     owner={{consul_user}}
     group={{consul_group}}

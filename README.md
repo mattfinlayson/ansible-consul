@@ -4,8 +4,7 @@
 
  * installs consul
  * configures consul
- * installs consul ui
- * configures consul ui
+ * optionally installs and configures consul ui
  * optionally installs dnsmasq
  * optionally install consulate
  * configures consul service(s)
@@ -35,9 +34,12 @@ $ git clone https://github.com/jivesoftware/ansible-consul.git
 Here is a list of all the default variables for this role, which are also available in `defaults/main.yml`.
 
 ```yml
+---
 consul_version: 0.5.2
 consul_archive: "{{ consul_version }}_linux_amd64.zip"
 consul_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_archive }}"
+consul_download_username: ""
+consul_download_password: ""
 consul_download_folder: /tmp
 
 consul_is_ui: false
@@ -55,10 +57,16 @@ consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
 
+consul_upstart_template: "consul.conf.j2"
+consul_systemd_template: "consul.systemd.j2"
+
 consul_binary: consul
 
 consul_user: consul
 consul_group: consul
+
+consul_use_systemd: false
+consul_use_upstart: true
 
 consul_is_server: false
 
@@ -69,15 +77,28 @@ consul_log_level: "INFO"
 consul_syslog: false
 consul_rejoin_after_leave: true
 consul_leave_on_terminate: false
+consul_join_at_start: false
+
 consul_bind_address: "0.0.0.0"
 consul_dynamic_bind: false
 consul_client_address: "127.0.0.1"
+
 consul_client_address_bind: false
 consul_datacenter: "default"
 consul_disable_remote_exec: true
 
+consul_port_dns: 8600
+consul_port_http: 8500
+consul_port_https: -1
+consul_port_rpc: 8400
+consul_port_serf_lan: 8301
+consul_port_serf_wan: 8302
+consul_port_server: 8300
+
 consul_install_dnsmasq: false
 consul_install_consulate: false
+
+consul_node_name: "{{ inventory_hostname }}"
 ```
 
 An instance might be defined through:
@@ -151,25 +172,42 @@ consul_statsite_prefix: "consul"
 
 These are the handlers that are defined in `handlers/main.yml`.
 
-* `restart consul` 
-* `restart dnsmasq` 
+* `restart consul`
+* `restart dnsmasq`
+* `reload consul config`
+* `reload systemd`
 
-## Example playbook
+## Example playbook that configures a Consul server on Ubuntu
 
 ```yml
 ---
 
 - hosts: all
-  roles:
-    - ansible-consul
   vars:
-    consul_is_ui: "true"
     consul_is_server: "true"
     consul_datacenter: "test"
     consul_bootstrap: "true"
-    consul_node_name: "vagrant"
     consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
+  roles:
+    - ansible-consul
 ```
+
+## Example playbooks that configures a Consul server on CentOS 7
+
+```yml
+---
+
+- hosts: all
+  vars:
+    consul_is_server: "true"
+    consul_datacenter: "test"
+    consul_bootstrap: "true"
+    consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
+    consul_use_systemd: true
+  roles:
+    - ansible-consul
+```
+
 
 ## Testing
 
