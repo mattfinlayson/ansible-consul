@@ -23,6 +23,7 @@ consul_data_dir: "{{ consul_home }}/data"
 
 consul_upstart_template: "consul.conf.j2"
 consul_systemd_template: "consul.systemd.j2"
+consul_initd_template: "consul.initd.sh.j2"
 
 consul_binary: consul
 
@@ -31,6 +32,7 @@ consul_group: consul
 
 consul_use_systemd: false
 consul_use_upstart: true
+consul_use_initd: false
 
 consul_is_server: false
 

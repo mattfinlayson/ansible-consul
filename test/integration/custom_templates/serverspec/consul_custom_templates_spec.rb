@@ -13,9 +13,17 @@ describe 'Consul' do
     end
   end
 
-  if os[:family] == 'redhat'
+  if os[:family] == 'redhat' and os[:release] == '7'
     describe 'custom SystemD service' do
       describe file('/etc/systemd/system/consul.service') do
+        it { should be_file }
+        its(:content) { should match /FOO=bar/ }
+      end
+    end
+  end
+  if os[:family] == 'redhat' and os[:release] == '6'
+    describe 'custom initd service' do
+      describe file('/etc/init.d/consul') do
         it { should be_file }
         its(:content) { should match /FOO=bar/ }
       end

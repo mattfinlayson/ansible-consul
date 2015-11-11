@@ -3,14 +3,25 @@
   apt: >
     update_cache=yes
     cache_valid_time=3600
+  when: ansible_os_family == "Debian"
 
-- name: install deps
+- name: install deps (Ubuntu)
   apt: >
     pkg={{item}}
     state=installed
   with_items:
     - python-pip
     - python-dev
+  when: ansible_os_family == "Debian"
+
+- name: install deps (RHEL)
+  yum: >
+    name={{item}}
+    state=installed
+  with_items:
+    - python-pip
+    - python-devel
+  when: ansible_os_family == "RedHat"
 
 - name: install python module consulate
   pip: >
