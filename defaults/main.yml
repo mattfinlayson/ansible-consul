@@ -13,6 +13,7 @@ consul_ui_dir: "{{ consul_home }}/dist"
 consul_ui_server_name: "{{ ansible_fqdn }}"
 consul_ui_require_auth: false
 consul_ui_auth_user_file: /etc/htpasswd/consul
+consul_ui_server_port: 80
 consul_enable_nginx_config: true
 
 consul_home: /opt/consul
