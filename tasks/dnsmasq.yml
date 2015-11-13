@@ -12,7 +12,7 @@
 
 - name: install deps (RHEL)
   yum: >
-    pkg=dnsmasq
+    name=dnsmasq
     state=installed
   when: ansible_os_family == "RedHat"
 
@@ -49,5 +49,4 @@
     dest=/etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
-
 - pause: minutes=1

@@ -32,7 +32,7 @@
     owner=root
     group=root
     mode=0755
-  when: consul_enable_nginx_config
+  when: consul_is_ui and ansible_os_family == "Debian"
   notify:
     - restart nginx
 
@@ -44,9 +44,18 @@
     owner=root
     group=root
     mode=0755
-  when: consul_enable_nginx_config
+  when: consul_is_ui and consul_enable_nginx_config and ansible_os_family == "Debian"
   notify:
   - restart nginx
+
+- name: consul nginx config
+  template: >
+    src=consul-nginx.conf.j2
+    dest=/etc/nginx/conf.d/consul.conf
+    owner=root
+    group=root
+    mode=0755
+  when: consul_is_ui and ansible_os_family == "RedHat"
 
 - name: create nginx home
   file: >

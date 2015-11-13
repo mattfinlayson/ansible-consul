@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# consul - this script starts and stops the consul service daemon
+#
+# chkconfig: 345 99 1
+# description:  consul
+# processname: consul
+# pidfile:     /var/run/consul.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+prog=consul
+cmd="/bin/${prog} agent"
+pidfile="/var/run/${prog}.pid"
+lockfile="/var/lock/subsys/${prog}"
+
+
+CONSUL_CONFIG_DIR="{{ consul_config_dir }}"
+CONSUL_DATA_DIR="{{ consul_data_dir }}"
+CONSUL_LOG_FILE="{{ consul_log_file }}"
+CONSUL_HOME="{{ consul_home }}"
+CONSUL_CONFIG_FILE="{{ consul_config_file }}"
+
+
+[[ -f /etc/sysconfig/consul ]] && . /etc/sysconfig/consul
+
+[[ -d $CONSUL_CONFIG_DIR ]] || mkdir -p $CONSUL_CONFIG_DIR
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon --pidfile=$pidfile "${CONSUL_HOME}/${cmd} {% if consul_dynamic_bind %} -bind=$BIND {% endif %} -config-dir=$CONSUL_CONFIG_DIR -config-file=$CONSUL_CONFIG_FILE -data-dir=$CONSUL_DATA_DIR>> $CONSUL_LOG_FILE &"
+    retval=$?
+    ps -ef | grep -F "${cmd}" | grep -v 'grep' | awk '{print $2}' > ${pidfile}
+    [ $retval -eq 0 ] && touch $lockfile && success
+    echo
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc -p $pidfile $prog
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+rh_status() {
+    status $prog
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+restart() {
+    stop
+    start
+}
+
+case "$1" in
+start)
+    rh_status_q && exit 0
+    $1
+    ;;
+stop)
+    rh_status_q || exit 0
+    $1
+    ;;
+restart)
+    rh_status_q || exit 7
+    ;;
+status|status_q)
+    rh_$1
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 2
+esac

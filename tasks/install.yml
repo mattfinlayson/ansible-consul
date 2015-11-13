@@ -104,6 +104,7 @@
     owner={{consul_user}}
     group={{consul_group}}
     recurse=yes
+  when: consul_was_downloaded|changed
 
 - name: copy consul upstart script
   template: >
@@ -126,6 +127,17 @@
   when: consul_use_systemd
   notify:
     - reload systemd
+    - restart consul
+
+- name: copy consul init.d script
+  template: >
+    src={{consul_initd_template}}
+    dest=/etc/init.d/consul
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0755
+  when: consul_use_initd
+  notify:
     - restart consul
 
 - name: add consul to path through profile.d

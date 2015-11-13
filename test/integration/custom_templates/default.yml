@@ -7,5 +7,6 @@
         consul_is_server: true,
         consul_dynamic_bind: true,
         consul_upstart_template: "../test/templates/consul_upstart.conf.j2",
-        consul_systemd_template: "../test/templates/consul.systemd.j2"
+        consul_systemd_template: "../test/templates/consul.systemd.j2",
+        consul_initd_template: "../test/templates/consul.initd.j2"
       }
