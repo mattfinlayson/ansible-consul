@@ -7,7 +7,6 @@ stop on runlevel [016]
 script
 
 # Make sure to use all our CPUs, because Consul can block a scheduler thread
-export GOMAXPROCS=`nproc`
 
 {% if consul_dynamic_bind %}
 # Get the public IP
@@ -19,7 +18,7 @@ BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
 CLIENT_BIND=`ifconfig eth0 | grep "inet addr" | awk '{ print substr($2,6) }'`
 {% endif %}
 
-sudo setcap CAP_NET_BIND_SERVICE=+eip /opt/consul/bin/consul; exec sudo -u {{ consul_user }} -g {{ consul_group }} {{ consul_home }}/bin/consul agent \
+sudo setcap CAP_NET_BIND_SERVICE=+eip /opt/consul/bin/consul; exec sudo -u {{ consul_user }} -g {{ consul_group }} GOMAXPROCS=`nproc` {{ consul_home }}/bin/consul agent \
 {% if consul_dynamic_bind %}
   -bind=$BIND \
 {% endif %}
