@@ -43,6 +43,7 @@
 
 - name: create consul user
   user: >
+    home={{consul_home}}
     name={{consul_user}}
     group={{consul_group}}
     system=yes
