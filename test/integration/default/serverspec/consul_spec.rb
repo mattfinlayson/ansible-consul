@@ -26,7 +26,7 @@ describe 'Consul' do
   if ['debian', 'ubuntu'].include?(os[:family])
     describe file('/etc/init/consul.conf') do
       it { should be_file }
-      its(:content) { should match /export GOMAXPROCS=`nproc`/ }
+      its(:content) { should match /GOMAXPROCS=`nproc`/ }
     end
 
     describe file('/var/log/consul') do

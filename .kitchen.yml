@@ -18,7 +18,7 @@ platforms:
       box_url: https://atlas.hashicorp.com/ubuntu/trusty64
     verifier:
       ruby_bindir: '/usr/bin'
-  
+
   - name: centos6
     provisioner:
       ansible_yum_repo: https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
@@ -50,3 +50,4 @@ suites:
   - name: dynamic_binding
   - name: tls
   - name: tls_client
+  - name: ui
