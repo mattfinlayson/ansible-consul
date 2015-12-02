@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+
+  vars:
+    nginx_remove_default: yes
+
+  roles:
+    - { role: ansible-consul,
+        consul_is_server: true,
+        consul_is_ui: true }
