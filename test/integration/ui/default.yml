@@ -7,4 +7,6 @@
   roles:
     - { role: ansible-consul,
         consul_is_server: true,
-        consul_is_ui: true }
+        consul_is_ui: true,
+        consul_port_http: 1234,
+        consul_ui_nginx_template: ../test/templates/consul-nginx.conf.j2 }

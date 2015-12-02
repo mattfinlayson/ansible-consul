@@ -27,7 +27,7 @@
 
 - name: consul nginx config
   template: >
-    src=consul-nginx.conf.j2
+    src={{consul_ui_nginx_template}}
     dest=/etc/nginx/sites-available/consul
     owner=root
     group=root
@@ -50,7 +50,7 @@
 
 - name: consul nginx config
   template: >
-    src=consul-nginx.conf.j2
+    src={{consul_ui_nginx_template}}
     dest=/etc/nginx/conf.d/consul.conf
     owner=root
     group=root
