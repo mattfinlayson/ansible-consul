@@ -44,6 +44,7 @@ platforms:
 suites:
   - name: acls
   - name: atlas_configuration
+  - name: cli
   - name: custom_templates
   - name: default
   - name: dns
