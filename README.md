@@ -7,6 +7,7 @@
  * optionally installs and configures consul ui
  * optionally installs dnsmasq
  * optionally install consulate
+ * optionally install consul-cli
  * configures consul service(s)
 
 ## Installation
@@ -50,6 +51,10 @@ consul_ui_server_name: "{{ ansible_fqdn }}"
 consul_ui_require_auth: false
 consul_ui_auth_user_file: /etc/htpasswd/consul
 consul_enable_nginx_config: true
+
+consul_install_consul_cli: false
+consul_cli_archive: "master.zip"
+consul_cli_download: "https://github.com/CiscoCloud/consul-cli/archive/{{ consul_cli_archive }}"
 
 consul_home: /opt/consul
 consul_config_dir: /etc/consul.d
