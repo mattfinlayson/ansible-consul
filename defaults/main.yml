@@ -27,6 +27,13 @@ consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
 
+consul_dns_allow_stale: false
+consul_dns_max_stale: 5s
+consul_dns_node_ttl: 0s
+consul_dns_service_ttl: 0s
+consul_dns_enable_truncate: false
+consul_dns_only_passing: false
+
 consul_upstart_template: "consul.conf.j2"
 consul_systemd_template: "consul.systemd.j2"
 consul_initd_template: "consul.initd.sh.j2"
