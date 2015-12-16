@@ -172,6 +172,17 @@ consul_statsite_address: "127.0.0.1:8125"
 consul_statsite_prefix: "consul"
 ```
 
+## DNS Variables
+Consul provides the ability to use it as a [DNS resolver](https://www.consul.io/docs/agent/dns.html) for service and node lookups. To enable [dns_config](https://www.consul.io/docs/agent/options.html#dns_config) with the below default values, set the `consul_dns_config` variable to `true`
+
+```yml
+consul_dns_allow_stale: false
+consul_dns_max_stale: 5s
+consul_dns_node_ttl: 0s
+consul_dns_service_ttl: 0s
+consul_dns_enable_truncate: false
+consul_dns_only_passing: false
+```
 
 ## Handlers
 
