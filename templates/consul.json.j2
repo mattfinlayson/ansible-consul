@@ -10,6 +10,18 @@
 {% endif %}
   "domain": "{{ consul_domain }}",
   "data_dir": "{{ consul_data_dir }}",
+{% if consul_dns_config is defined %}
+  "dns_config": {
+    "allow_stale": {{ "true" if consul_dns_allow_stale else "false" }},
+    "max_stale": "{{ consul_dns_max_stale }}",
+    "node_ttl": "{{ consul_dns_node_ttl }}",
+    "service_ttl": {
+      "*": "{{ consul_dns_service_ttl }}"
+    },
+    "enable_truncate": {{ "true" if consul_dns_enable_truncate else "false" }},
+    "only_passing": {{ "true" if consul_dns_only_passing else "false" }}
+  },
+{% endif %}
   "log_level": "{{ consul_log_level }}",
 {% if consul_syslog %}
   "enable_syslog": true,
