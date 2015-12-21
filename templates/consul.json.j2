@@ -1,6 +1,6 @@
 {
 {% if consul_is_ui == true %}
-  "ui_dir": "{{ consul_home }}/dist",
+  "ui_dir": "{{ consul_ui_dir }}",
 {% endif %}
 {% if consul_join_at_start is defined and consul_join_at_start %}
   "start_join": [{% for host in consul_servers %}{% if host not in ansible_all_ipv4_addresses %}"{{host}}"{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}],
