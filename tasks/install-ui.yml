@@ -9,10 +9,13 @@
   register: consul_ui_was_downloaded
   when: consul_archive_ui_stat.stat.exists == False
 
+- name: create ui dir
+  file: path={{ consul_ui_dir }} state=directory
+
 - name: copy and unpack ui
   unarchive: >
     src={{ consul_download_folder }}/{{ consul_ui_archive }}
-    dest={{ consul_home }}
+    dest={{ consul_ui_dir }}
     copy=no
   when: consul_ui_was_downloaded|changed
 
