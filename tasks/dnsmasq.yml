@@ -31,17 +31,29 @@
 - name: add local dns lookup
   lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolvconf/resolv.conf.d/consul" create=yes
 
-- name: configure dnsmasq to listen on loopback interface only
+- name: configure dnsmasq to listen on loopback interface 
   lineinfile:
     dest: /etc/dnsmasq.conf
     regexp: "^#interface="
     line: "interface=lo"
+
+- name: configure dnsmasq to listen on docker0 interface
+  lineinfile:
+    dest: /etc/dnsmasq.conf
+    insertafter: "^interface=lo"
+    line: "interface=docker0"
 
 - name: configure dnsmasq to disable DHCP and TFTP
   lineinfile:
     dest: /etc/dnsmasq.conf
     regexp: "^#no-dhcp-interface="
     line: "no-dhcp-interface=lo"
+
+- name: configure dnsmasq to disable DHCP and TFTP
+  lineinfile:
+    dest: /etc/dnsmasq.conf
+    insertafter: "^no-dhcp-interface=lo"
+    line: "no-dhcp-interface=docker0"
 
 - name: configure dnsmasq to delegate all Consul DNS requests to the Consul DNS port
   copy: >
