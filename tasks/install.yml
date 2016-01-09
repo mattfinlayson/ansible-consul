@@ -40,6 +40,7 @@
   group: >
     name={{consul_group}}
     state=present
+  register: consul_group_created
 
 - name: create consul user
   user: >
@@ -47,6 +48,7 @@
     name={{consul_user}}
     group={{consul_group}}
     system=yes
+  when: consul_group_created|changed
 
 - name: create consul directory
   file: >
