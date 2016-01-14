@@ -1,5 +1,5 @@
 ---
-consul_version: 0.5.2
+consul_version: 0.6.0
 consul_archive: "consul_{{ consul_version }}_linux_amd64.zip"
 consul_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_archive }}"
 consul_download_username: ""
@@ -15,6 +15,8 @@ consul_ui_require_auth: false
 consul_ui_nginx_template: "consul-nginx.conf.j2"
 consul_ui_auth_user_file: /etc/htpasswd/consul
 consul_ui_server_port: 80
+consul_install_nginx: true
+consul_install_nginx_config: true
 consul_enable_nginx_config: true
 
 consul_install_consul_cli: false

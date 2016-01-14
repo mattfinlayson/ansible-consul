@@ -36,20 +36,22 @@ Here is a list of all the default variables for this role, which are also availa
 
 ```yml
 ---
-consul_version: 0.5.2
-consul_archive: "{{ consul_version }}_linux_amd64.zip"
-consul_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_archive }}"
+consul_version: 0.6.0
+consul_archive: "consul_{{ consul_version }}_linux_amd64.zip"
+consul_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_archive }}"
 consul_download_username: ""
 consul_download_password: ""
 consul_download_folder: /tmp
 
 consul_is_ui: false
-consul_ui_archive: "{{ consul_version }}_web_ui.zip"
-consul_ui_download: "https://dl.bintray.com/mitchellh/consul/{{ consul_ui_archive }}"
+consul_ui_archive: "consul_{{ consul_version }}_web_ui.zip"
+consul_ui_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_ui_archive }}"
 consul_ui_dir: "{{ consul_home }}/dist"
 consul_ui_server_name: "{{ ansible_fqdn }}"
 consul_ui_require_auth: false
 consul_ui_auth_user_file: /etc/htpasswd/consul
+consul_install_nginx: true
+consul_install_nginx_config: true
 consul_enable_nginx_config: true
 
 consul_install_consul_cli: false
