@@ -66,6 +66,9 @@
   "verify_incoming": true,
   "verify_outgoing": true,
 {% endif %}
+{% if consul_is_server and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined and consul_server_hostname %}
+  "verify_server_hostname": true,
+{% endif %}
 {% if consul_is_server == false and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined %}
   "cert_file": "{{ consul_cert_file }}",
   "key_file": "{{ consul_key_file }}",
