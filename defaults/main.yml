@@ -58,7 +58,18 @@ consul_log_level: "INFO"
 consul_syslog: false
 consul_rejoin_after_leave: true
 consul_leave_on_terminate: false
+
 consul_join_at_start: false
+consul_retry_join: false
+consul_retry_interval: 30s
+consul_retry_max: 0
+
+consul_servers_wan: []
+consul_join_wan: false
+consul_retry_join_wan: false
+consul_retry_interval_wan: 30s
+consul_retry_max_wan: 0
+consul_advertise_address_wan: false
 
 consul_bind_address: "0.0.0.0"
 consul_dynamic_bind: false
