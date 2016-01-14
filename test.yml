@@ -9,6 +9,7 @@
     consul_datacenter: "test"
     consul_bootstrap: true
     consul_node_name: "vagrant"
+    consul_advertise_address: "10.0.2.15"
     nginx_remove_default: yes
     htpasswd:
       - name: admin
