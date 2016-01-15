@@ -5,6 +5,19 @@
 {% if consul_join_at_start is defined and consul_join_at_start %}
   "start_join": [{% for host in consul_servers | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
 {% endif %}
+{% if consul_retry_join|default(false) %}
+  "retry_join": [{% for host in consul_servers | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "retry_interval": "{{ consul_retry_interval }}",
+  "retry_max": {{ consul_retry_max }},
+{% endif %}
+{% if consul_join_wan|default(false) %}
+  "join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{% endif %}
+{% if consul_retry_join_wan|default(false) %}
+  "retry_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "retry_interval_wan": "{{ consul_retry_interval_wan }}",
+  "retry_max_wan": {{ consul_retry_max_wan }},
+{% endif %}
 {% if consul_disable_remote_exec is defined %}
   "disable_remote_exec": {{ "true" if consul_disable_remote_exec else "false" }},
 {% endif %}
@@ -42,6 +55,9 @@
 {% endif %}
 {% if consul_advertise_address is defined %}
   "advertise_addr": "{{ consul_advertise_address }}",
+{% endif %}
+{% if consul_advertise_address_wan|default(false) %}
+  "advertise_addr_wan": "{{ consul_advertise_address_wan }}",
 {% endif %}
   "datacenter": "{{ consul_datacenter }}",
 {% if consul_is_server and consul_bootstrap is defined %}
