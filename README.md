@@ -265,4 +265,4 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 5. Create new Pull Request
 
 ## License
-Copyright (c) Jive Software under the Apache license.
+Copyright (c) Matthew Finlayson under the Apache license.
