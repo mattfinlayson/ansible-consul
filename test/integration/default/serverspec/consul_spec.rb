@@ -31,6 +31,11 @@ describe 'Consul' do
 
     describe file('/var/log/consul') do
       it { should be_file }
+      it { should be_owned_by('consul') }
+    end
+
+    describe file('/var/log') do
+      it { should_not be_owned_by('consul') }
     end
   end
 end

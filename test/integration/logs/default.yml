@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+
+  roles:
+      - { role: ansible-consul, consul_log_file: /var/log/consul/consul.log, consul_is_server: true }
