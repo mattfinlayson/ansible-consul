@@ -28,6 +28,7 @@ platforms:
         consul_use_initd: true
         consul_use_systemd: false
         consul_use_upstart: false
+        nginx_user: nginx
     driver_config:
       box: puppetlabs/centos-6.6-64-nocm
 
@@ -38,6 +39,7 @@ platforms:
       require_ruby_for_busser: false
       extra_vars:
         consul_use_systemd: true
+        nginx_user: nginx
     driver_config:
       box: puppetlabs/centos-7.0-64-nocm
 
