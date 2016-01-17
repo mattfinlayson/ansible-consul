@@ -63,6 +63,28 @@
     - "{{ consul_data_dir }}"
     - "{{ consul_config_dir }}"
 
+# Check before creating log dir to prevent aggressively overwriting permissions
+- name: check for consul log directory
+  stat: >
+    path={{ consul_log_file|dirname }}
+  register: logdir
+
+- name: create log directory if it does not exist
+  file: >
+    state=directory
+    path={{ consul_log_file|dirname }}
+    owner={{ consul_user }}
+    group={{ consul_group }}
+  when: not logdir.stat.exists
+
+- name: touch the log file
+  file: >
+    state=touch
+    path={{ consul_log_file }}
+    owner={{ consul_user }}
+    group={{ consul_group }}
+  changed_when: false
+
 - name: copy and unpack
   unarchive: >
     src={{ consul_download_folder }}/{{ consul_archive }}
