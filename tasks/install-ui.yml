@@ -65,14 +65,3 @@
     group=root
     mode=0755
   when: consul_is_ui and consul_install_nginx_config and ansible_os_family == "RedHat"
-
-- name: create nginx home
-  file: >
-    state=directory
-    path=/var/www/consul/htdocs
-    owner=root
-    group=root
-    mode=0755
-  notify:
-    - restart nginx
-  when: consul_install_nginx_config and consul_enable_nginx_config
