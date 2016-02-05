@@ -11,7 +11,7 @@
   "retry_max": {{ consul_retry_max }},
 {% endif %}
 {% if consul_join_wan|default(false) %}
-  "join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "start_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
 {% endif %}
 {% if consul_retry_join_wan|default(false) %}
   "retry_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
