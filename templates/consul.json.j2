@@ -81,9 +81,7 @@
   "ca_file": "{{ consul_ca_file }}",
   "verify_incoming": true,
   "verify_outgoing": true,
-{% endif %}
-{% if consul_is_server and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined and consul_server_hostname %}
-  "verify_server_hostname": true,
+  "verify_server_hostname": {{ consul_verify_server_hostname|lower }},
 {% endif %}
 {% if consul_is_server == false and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined %}
   "cert_file": "{{ consul_cert_file }}",

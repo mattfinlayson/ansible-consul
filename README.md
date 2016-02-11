@@ -117,6 +117,7 @@ consul_install_dnsmasq: false
 consul_install_consulate: false
 
 consul_node_name: "{{ inventory_hostname }}"
+consul_verify_server_hostname: false
 ```
 
 An instance might be defined through:
