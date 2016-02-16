@@ -35,6 +35,9 @@
     "only_passing": {{ "true" if consul_dns_only_passing else "false" }}
   },
 {% endif %}
+{% if (consul_recursors is defined) and consul_recursors %}
+    "recursors": [{% for host in consul_recursors %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{% endif %}
   "log_level": "{{ consul_log_level }}",
 {% if consul_syslog %}
   "enable_syslog": true,

@@ -67,6 +67,3 @@ DEPENDENCIES
   kitchen-vagrant
   serverspec
   test-kitchen
-
-BUNDLED WITH
-   1.10.5
