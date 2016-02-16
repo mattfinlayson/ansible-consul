@@ -188,6 +188,8 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0755
+  notify:
+    - restart consul
 
 - name: add CONSUL_RPC_ADDR to .bashrc
   sudo: false
