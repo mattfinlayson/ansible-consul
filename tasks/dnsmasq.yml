@@ -65,4 +65,21 @@
     dest: /etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
+
+- name: create alternate upstream servers file for dnsmasq
+  template:
+    src: "{{ consul_dnsmasq_upstream_template }}"
+    dest: /etc/resolv_dnsmasq.conf
+  when: "{{ (consul_dnsmasq.upstream_servers is defined) and consul_dnsmasq.upstream_servers }}"
+  notify:
+    - restart dnsmasq
+
+- name: configure dnsmasq to use alternate upstream servers file
+  copy:
+    content: "resolv-file=/etc/resolv_dnsmasq.conf"
+    dest: /etc/dnsmasq.d/20-upstream-servers
+  when: "{{ (consul_dnsmasq.upstream_servers is defined) and consul_dnsmasq.upstream_servers }}"
+  notify:
+    - restart dnsmasq
+
 - pause: minutes=1

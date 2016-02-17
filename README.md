@@ -77,6 +77,7 @@ consul_recursors: []
 consul_upstart_template: "consul.conf.j2"
 consul_systemd_template: "consul.systemd.j2"
 consul_initd_template: "consul.initd.sh.j2"
+consul_dnsmasq_upstream_template: "resolv_dnsmasq.conf.j2"
 
 consul_binary: consul
 
@@ -135,6 +136,9 @@ consul_dnsmasq:
     - lo
     - docker0
     - eth0
+  upstream_servers:
+    - 8.8.8.8
+    - 8.8.4.4
 consul_node_name: "{{ inventory_hostname }}"
 consul_verify_server_hostname: false
 ```
