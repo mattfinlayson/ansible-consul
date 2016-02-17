@@ -52,7 +52,6 @@
     "rpc": "127.0.0.1"
   },
 {% endif %}
-  "client_addr": "{{ consul_client_address }}",
 {% if consul_dynamic_bind == false and consul_bind_address is defined and consul_bind_address is not none %}
   "bind_addr": "{{ consul_bind_address }}",
 {% endif %}
