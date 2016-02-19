@@ -17,48 +17,59 @@
   when: ansible_os_family == "RedHat"
 
 - name: ensure configure directory
-  file: dest=/etc/dnsmasq.d state=directory
+  file: >
+    dest=/etc/dnsmasq.d
+    state=directory
 
 - name: ensure dnsmasq configuration
-  lineinfile: dest="/etc/dnsmasq.conf"
-              regexp="^#conf-dir=/etc/dnsmasq.conf"
-              line="conf-dir=/etc/dnsmasq.d"
-              state=present
+  replace: >
+    dest=/etc/dnsmasq.conf
+    regexp="^#conf-dir=/etc/dnsmasq.d"
+    replace="conf-dir=/etc/dnsmasq.d"
 
 - name: ensure configure directory
-  file: dest=/etc/resolvconf/resolv.conf.d state=directory
+  file: >
+    dest=/etc/resolvconf/resolv.conf.d
+    state=directory
 
 - name: add local dns lookup
-  lineinfile: line="nameserver 127.0.0.1" insertbefore=BOF state=present dest="/etc/resolvconf/resolv.conf.d/consul" create=yes
+  lineinfile: >
+    line="nameserver 127.0.0.1"
+    insertbefore=BOF
+    state=present
+    dest="/etc/resolvconf/resolv.conf.d/consul"
+    create=yes
 
-- name: configure dnsmasq to listen on loopback interface 
-  lineinfile:
-    dest: /etc/dnsmasq.conf
-    regexp: "^#interface="
-    line: "interface=lo"
+- name: configure dnsmasq to listen on loopback interface
+  replace: >
+    dest=/etc/dnsmasq.conf
+    regexp="^#interface="
+    replace="interface=lo"
 
 - name: configure dnsmasq to listen on docker0 interface
-  lineinfile:
-    dest: /etc/dnsmasq.conf
-    insertafter: "^interface=lo"
-    line: "interface=docker0"
+  lineinfile: >
+    dest=/etc/dnsmasq.conf
+    insertafter="^interface=lo"
+    line="interface=docker0"
 
 - name: configure dnsmasq to disable DHCP and TFTP
-  lineinfile:
-    dest: /etc/dnsmasq.conf
-    regexp: "^#no-dhcp-interface="
-    line: "no-dhcp-interface=lo"
+  replace: >
+    dest=/etc/dnsmasq.conf
+    regexp="^#no-dhcp-interface="
+    replace="no-dhcp-interface=lo"
 
 - name: configure dnsmasq to disable DHCP and TFTP
-  lineinfile:
-    dest: /etc/dnsmasq.conf
-    insertafter: "^no-dhcp-interface=lo"
-    line: "no-dhcp-interface=docker0"
+  lineinfile: >
+    dest=/etc/dnsmasq.conf
+    insertafter="^no-dhcp-interface=lo"
+    line="no-dhcp-interface=docker0"
 
 - name: configure dnsmasq to delegate all Consul DNS requests to the Consul DNS port
   copy: >
-    content='server=/{{ consul_domain }}/{{ consul_client_address }}#{{ consul_port_dns }}'
+    content='server=/{{ consul_domain }}/127.0.0.1#{{ consul_port_dns }}'
     dest=/etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
+    - check dns
 - pause: minutes=1
+
