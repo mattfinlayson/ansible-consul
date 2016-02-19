@@ -66,10 +66,9 @@
 
 - name: configure dnsmasq to delegate all Consul DNS requests to the Consul DNS port
   copy: >
-    content='server=/{{ consul_domain }}/127.0.0.1#{{ consul_port_dns }}'
+    content='server=/{{ consul_domain }}/{{ consul_client_address }}#{{ consul_port_dns }}'
     dest=/etc/dnsmasq.d/10-consul
   notify:
     - restart dnsmasq
-    - check dns
 - pause: minutes=1
 
