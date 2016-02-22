@@ -7,16 +7,18 @@
     path: "{{ consul_ui_dir }}"
     state: directory
     mode: 0755
+  when: consul_version | version_compare('0.6.1', '<')
 
 - name: download consul ui
   get_url: >
     url={{consul_ui_download}}
     dest={{consul_download_folder}}
   register: consul_ui_was_downloaded
-  when: consul_archive_ui_stat.stat.exists == False
+  when: consul_version | version_compare('0.6.1', '<') and consul_archive_ui_stat.stat.exists == False
 
 - name: create ui dir
   file: path={{ consul_ui_dir }} state=directory
+  when: consul_version | version_compare('0.6.1', '<')
 
 - name: copy and unpack ui
   unarchive: >
