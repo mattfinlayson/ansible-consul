@@ -1,5 +1,7 @@
 [Unit]
 Description=Consul Agent
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Environment="GOMAXPROCS=`nproc`"

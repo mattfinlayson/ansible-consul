@@ -146,9 +146,9 @@
   template: >
     src={{consul_systemd_template}}
     dest=/etc/systemd/system/consul.service
-    owner={{consul_user}}
-    group={{consul_group}}
-    mode=0755
+    owner=root
+    group=root
+    mode=0644
   when: consul_use_systemd
   notify:
     - reload systemd
