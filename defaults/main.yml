@@ -1,5 +1,5 @@
 ---
-consul_version: 0.6.0
+consul_version: 0.6.3
 consul_archive: "consul_{{ consul_version }}_linux_amd64.zip"
 consul_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ consul_archive }}"
 consul_download_username: ""
