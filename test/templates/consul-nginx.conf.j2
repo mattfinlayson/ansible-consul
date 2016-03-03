@@ -1,6 +1,6 @@
 server {
   server_name {{ consul_ui_server_name }};
-  root /var/www/consul/htdocs;
+  root {{ consul_ui_dir }};
 
   # --- listen ----------------------------------------------------------------
 
@@ -18,7 +18,7 @@ server {
 
 
   location / {
-      proxy_pass http://$server_addr:{{ consul_port_http }};
+      proxy_pass http://{{ consul_client_address }}:{{ consul_port_http }};
       {%- if consul_ui_require_auth -%}
       auth_basic "Restricted";
       auth_basic_user_file {{ consul_ui_auth_user_file }};
