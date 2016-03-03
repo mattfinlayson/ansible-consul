@@ -29,16 +29,19 @@ consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
 
+consul_dns_config: false
 consul_dns_allow_stale: false
 consul_dns_max_stale: 5s
 consul_dns_node_ttl: 0s
 consul_dns_service_ttl: 0s
 consul_dns_enable_truncate: false
 consul_dns_only_passing: false
+consul_recursors: []
 
 consul_upstart_template: "consul.conf.j2"
 consul_systemd_template: "consul.systemd.j2"
 consul_initd_template: "consul.initd.sh.j2"
+consul_dnsmasq_upstream_template: "resolv_dnsmasq.conf.j2"
 
 consul_binary: consul
 
@@ -86,10 +89,20 @@ consul_port_rpc: 8400
 consul_port_serf_lan: 8301
 consul_port_serf_wan: 8302
 consul_port_server: 8300
-
 consul_install_dnsmasq: false
 consul_install_consulate: false
-
+consul_dnsmasq:
+  listen_interface:
+    - lo
+    - docker0
+    - eth0
+  no_dhcp_interface:
+    - lo
+    - docker0
+    - eth0
+  upstream_servers:
+    - 8.8.8.8
+    - 8.8.4.4
 consul_node_name: "{{ inventory_hostname }}"
 # Set to true to enable hostname verification via TLS
 consul_verify_server_hostname: false
