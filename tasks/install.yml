@@ -192,4 +192,6 @@
     - restart consul
 
 - name: add CONSUL_RPC_ADDR to .bashrc
+  become: yes
+  become_user: "{{ consul_user }}"
   lineinfile: dest="{{ consul_home }}/.bashrc" insertbefore=BOF regexp='^export CONSUL_RPC_ADDR' line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"'
