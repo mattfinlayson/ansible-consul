@@ -135,9 +135,9 @@
   template: >
     src={{consul_upstart_template}}
     dest=/etc/init/consul.conf
-    owner={{consul_user}}
-    group={{consul_group}}
-    mode=0755
+    owner=root
+    group=root
+    mode=0644
   when: consul_use_upstart and ansible_os_family == "Debian"
   notify:
     - restart consul
@@ -158,9 +158,9 @@
   template: >
     src={{consul_initd_template}}
     dest=/etc/init.d/consul
-    owner={{consul_user}}
-    group={{consul_group}}
-    mode=0755
+    owner=root
+    group=root
+    mode=0644
   when: consul_use_initd
   notify:
     - restart consul
