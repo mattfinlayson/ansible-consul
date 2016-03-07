@@ -1,11 +1,12 @@
 ---
 - name: restart consul
   action: service name=consul state={{ consul_service_state }} enabled=yes
+  when: consul_manage_service
 
 - name: reload consul config
   sudo: yes
   command: pkill -1 consul
-  when: consul_service_state is not  "stopped"
+  when: consul_service_state is not "stopped" and consul_manage_service
 
 - name: reload systemd
   sudo: yes
