@@ -18,6 +18,8 @@ consul_ui_server_port: 80
 consul_install_nginx: true
 consul_install_nginx_config: true
 consul_enable_nginx_config: true
+consul_service_state: restarted
+consul_manage_service: true
 
 consul_install_consul_cli: false
 consul_cli_archive: "master.zip"
