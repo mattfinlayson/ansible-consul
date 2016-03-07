@@ -167,7 +167,7 @@
 
 - name: add consul to path through profile.d
   template: >
-    src=consul.sh.j2
+    src={{consul_add_path_template}}
     dest=/etc/profile.d/consul.sh
     owner=root
     group=root
@@ -175,7 +175,7 @@
 
 - name: copy consulkv script
   template: >
-    src=consulkv.j2
+    src={{consul_kv_template}}
     dest={{consul_home}}/bin/consulkv
     owner={{consul_user}}
     group={{consul_group}}
@@ -183,7 +183,7 @@
 
 - name: consul config file
   template: >
-    src=consul.json.j2
+    src={{consul_config_template}}
     dest={{ consul_config_file }}
     owner={{consul_user}}
     group={{consul_group}}

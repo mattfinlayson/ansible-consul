@@ -78,6 +78,9 @@ consul_upstart_template: "consul.conf.j2"
 consul_systemd_template: "consul.systemd.j2"
 consul_initd_template: "consul.initd.sh.j2"
 consul_dnsmasq_upstream_template: "resolv_dnsmasq.conf.j2"
+consul_kv_template: "consulkv.j2"
+consul_add_path_template: "consul.sh.j2"
+consul_config_template: "consul.json.j2"
 
 consul_binary: consul
 
