@@ -135,9 +135,9 @@
   template: >
     src={{consul_upstart_template}}
     dest=/etc/init/consul.conf
-    owner={{consul_user}}
-    group={{consul_group}}
-    mode=0755
+    owner=root
+    group=root
+    mode=0644
   when: consul_use_upstart and ansible_os_family == "Debian"
   notify:
     - restart consul
@@ -146,9 +146,9 @@
   template: >
     src={{consul_systemd_template}}
     dest=/etc/systemd/system/consul.service
-    owner={{consul_user}}
-    group={{consul_group}}
-    mode=0755
+    owner=root
+    group=root
+    mode=0644
   when: consul_use_systemd
   notify:
     - reload systemd
@@ -158,16 +158,16 @@
   template: >
     src={{consul_initd_template}}
     dest=/etc/init.d/consul
-    owner={{consul_user}}
-    group={{consul_group}}
-    mode=0755
+    owner=root
+    group=root
+    mode=0644
   when: consul_use_initd
   notify:
     - restart consul
 
 - name: add consul to path through profile.d
   template: >
-    src=consul.sh.j2
+    src={{consul_add_path_template}}
     dest=/etc/profile.d/consul.sh
     owner=root
     group=root
@@ -175,7 +175,7 @@
 
 - name: copy consulkv script
   template: >
-    src=consulkv.j2
+    src={{consul_kv_template}}
     dest={{consul_home}}/bin/consulkv
     owner={{consul_user}}
     group={{consul_group}}
@@ -183,12 +183,13 @@
 
 - name: consul config file
   template: >
-    src=consul.json.j2
+    src={{consul_config_template}}
     dest={{ consul_config_file }}
     owner={{consul_user}}
     group={{consul_group}}
     mode=0755
+  notify:
+    - restart consul
 
 - name: add CONSUL_RPC_ADDR to .bashrc
-  sudo: false
-  lineinfile: dest=~/.bashrc insertbefore=BOF regexp='^export CONSUL_RPC_ADDR' line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"'
+  lineinfile: dest="{{ consul_home }}/.bashrc" insertbefore=BOF regexp='^export CONSUL_RPC_ADDR' line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"' create=yes

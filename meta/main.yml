@@ -14,6 +14,7 @@ galaxy_info:
   categories:
     - system
 dependencies:
+  - { role: geerlingguy.repo-epel, when: ansible_os_family == "RedHat" }
   - { role: franklinkim.nginx, when: consul_install_nginx == true and ansible_os_family == "Debian" }
   - { role: geerlingguy.nginx, when: consul_install_nginx == true and ansible_os_family == "RedHat" }
   - { role: joshualund.golang, when: consul_install_consul_cli == true }

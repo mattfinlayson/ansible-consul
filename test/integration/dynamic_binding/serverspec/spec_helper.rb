@@ -1,1 +1,2 @@
-../../default/serverspec/spec_helper.rb
+require 'serverspec'
+set :backend, :exec

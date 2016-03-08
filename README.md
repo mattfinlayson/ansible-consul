@@ -49,10 +49,13 @@ consul_ui_download: "https://releases.hashicorp.com/consul/{{ consul_version }}/
 consul_ui_dir: "{{ consul_home }}/dist"
 consul_ui_server_name: "{{ ansible_fqdn }}"
 consul_ui_require_auth: false
+consul_ui_nginx_template: "consul-nginx.conf.j2"
 consul_ui_auth_user_file: /etc/htpasswd/consul
+consul_ui_server_port: 80
 consul_install_nginx: true
 consul_install_nginx_config: true
 consul_enable_nginx_config: true
+consul_service_state: restarted
 
 consul_install_consul_cli: false
 consul_cli_archive: "master.zip"
@@ -64,8 +67,21 @@ consul_config_file: /etc/consul.conf
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
 
+consul_dns_allow_stale: false
+consul_dns_max_stale: 5s
+consul_dns_node_ttl: 0s
+consul_dns_service_ttl: 0s
+consul_dns_enable_truncate: false
+consul_dns_only_passing: false
+consul_recursors: []
+
 consul_upstart_template: "consul.conf.j2"
 consul_systemd_template: "consul.systemd.j2"
+consul_initd_template: "consul.initd.sh.j2"
+consul_dnsmasq_upstream_template: "resolv_dnsmasq.conf.j2"
+consul_kv_template: "consulkv.j2"
+consul_add_path_template: "consul.sh.j2"
+consul_config_template: "consul.json.j2"
 
 consul_binary: consul
 
@@ -74,6 +90,7 @@ consul_group: consul
 
 consul_use_systemd: false
 consul_use_upstart: true
+consul_use_initd: false
 
 consul_is_server: false
 
@@ -112,10 +129,20 @@ consul_port_rpc: 8400
 consul_port_serf_lan: 8301
 consul_port_serf_wan: 8302
 consul_port_server: 8300
-
 consul_install_dnsmasq: false
 consul_install_consulate: false
-
+consul_dnsmasq:
+  listen_interface:
+    - lo
+    - docker0
+    - eth0
+  no_dhcp_interface:
+    - lo
+    - docker0
+    - eth0
+  upstream_servers:
+    - 8.8.8.8
+    - 8.8.4.4
 consul_node_name: "{{ inventory_hostname }}"
 consul_verify_server_hostname: false
 ```
@@ -196,6 +223,9 @@ consul_dns_node_ttl: 0s
 consul_dns_service_ttl: 0s
 consul_dns_enable_truncate: false
 consul_dns_only_passing: false
+consul_recursors:
+  - 8.8.8.8
+  - 8.8.4.4
 ```
 
 ## Handlers
