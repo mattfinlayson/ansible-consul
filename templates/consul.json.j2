@@ -141,6 +141,11 @@
 {% if consul_statsite_prefix is defined %}
   "statsite_prefix": "{{ consul_statsite_prefix }}",
 {% endif %}
+{% if consul_cors_support is defined %}
+  "http_api_response_headers": {
+        "Access-Control-Allow-Origin": "*"
+  },
+{% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
 }

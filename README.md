@@ -145,6 +145,7 @@ consul_dnsmasq:
     - 8.8.4.4
 consul_node_name: "{{ inventory_hostname }}"
 consul_verify_server_hostname: false
+consul_cors_support: false
 ```
 
 An instance might be defined through:
@@ -226,6 +227,12 @@ consul_dns_only_passing: false
 consul_recursors:
   - 8.8.8.8
   - 8.8.4.4
+```
+## Cross-origin Resource Sharing
+Consul allows adding headers to the HTTP API responses, to enable [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) set the `consul_cors_support` variable to `true`
+
+```yml
+consul_cors_support: true
 ```
 
 ## Handlers
