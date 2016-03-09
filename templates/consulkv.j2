@@ -1,0 +1,30 @@
+#!/bin/bash
+# From: https://gist.github.com/progrium/b45a9fe697dd68c3ea0f
+
+CONSUL="http://127.0.0.1:8500"
+
+main() {
+  case "$1" in
+    info)
+      curl -s "$CONSUL/v1/kv/$2" | jq -r .[]
+      ;;
+    get)
+      curl -s "$CONSUL/v1/kv/$2" | jq -r .[].Value | base64 -d | sed 's/$/\n/'
+      ;;
+    set)
+      curl -s -X PUT -d "$3" "$CONSUL/v1/kv/$2" > /dev/null
+      ;;
+    del)
+      curl -s -X DELETE -d "$3" "$CONSUL/v1/kv/$2" > /dev/null
+      ;;
+    ls)
+      if [[ "$2" == "" ]]; then
+        curl -s "$CONSUL/v1/kv/?keys" | jq -r .[]
+      else
+        curl -s "$CONSUL/v1/kv/$2/?keys" | jq -r .[] | sed "s|$2/||"
+      fi
+      ;;
+  esac
+}
+
+main "$@"

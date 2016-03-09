@@ -1,0 +1,195 @@
+---
+- name: update apt
+  apt: >
+    update_cache=yes
+    cache_valid_time=3600
+  when: ansible_os_family == "Debian"
+
+- name: install deps (Ubuntu)
+  apt: >
+    pkg={{item}}
+    state=installed
+  with_items:
+    - unzip
+    - jq
+  when: ansible_os_family == "Debian"
+
+- name: install deps (RHEL)
+  yum: >
+    pkg={{item}}
+    state=installed
+  with_items:
+    - unzip
+    - jq
+  when: ansible_os_family == "RedHat"
+
+- name: check archive stat
+  stat: path={{ consul_download_folder }}/{{ consul_archive }}
+  register: consul_archive_stat
+
+- name: download consul
+  get_url: >
+    url={{consul_download}}
+    dest={{consul_download_folder}}
+    url_username={{ consul_download_username }}
+    url_password={{ consul_download_password }}
+  register: consul_was_downloaded
+  when: consul_archive_stat.stat.exists == False
+
+- name: create consul group
+  group: >
+    name={{consul_group}}
+    state=present
+  register: consul_group_created
+
+- name: create consul user
+  user: >
+    home={{consul_home}}
+    name={{consul_user}}
+    group={{consul_group}}
+    system=yes
+  when: consul_group_created|changed
+
+- name: create consul directory
+  file: >
+    state=directory
+    path={{ item }}
+    owner={{consul_user}}
+    group={{consul_group}}
+  with_items:
+    - "{{ consul_home }}"
+    - "{{ consul_home }}/bin"
+    - "{{ consul_home }}/cert"
+    - "{{ consul_data_dir }}"
+    - "{{ consul_config_dir }}"
+
+# Check before creating log dir to prevent aggressively overwriting permissions
+- name: check for consul log directory
+  stat: >
+    path={{ consul_log_file|dirname }}
+  register: logdir
+
+- name: create log directory if it does not exist
+  file: >
+    state=directory
+    path={{ consul_log_file|dirname }}
+    owner={{ consul_user }}
+    group={{ consul_group }}
+  when: not logdir.stat.exists
+
+- name: touch the log file
+  file: >
+    state=touch
+    path={{ consul_log_file }}
+    owner={{ consul_user }}
+    group={{ consul_group }}
+  changed_when: false
+
+- name: copy and unpack
+  unarchive: >
+    src={{ consul_download_folder }}/{{ consul_archive }}
+    dest={{ consul_home }}/bin
+    copy=no
+  when: consul_was_downloaded|changed
+
+- name: create TLS key
+  no_log: True
+  copy: >
+    content="{{ consul_tls_key }}"
+    dest="{{ consul_key_file }}"
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0600
+  when: consul_tls_key is defined
+
+- name: create TLS cert
+  no_log: True
+  copy: >
+    content="{{ consul_tls_cert }}"
+    dest="{{ consul_cert_file }}"
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0600
+  when: consul_tls_cert is defined
+
+- name: create TLS root CA cert
+  no_log: True
+  copy: >
+    content="{{ consul_tls_ca_cert }}"
+    dest="{{ consul_ca_file }}"
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0600
+  when: consul_tls_ca_cert is defined
+
+- name: set ownership
+  file: >
+    state=directory
+    path={{consul_home}}
+    owner={{consul_user}}
+    group={{consul_group}}
+    recurse=yes
+  when: consul_was_downloaded|changed
+
+- name: copy consul upstart script
+  template: >
+    src={{consul_upstart_template}}
+    dest=/etc/init/consul.conf
+    owner=root
+    group=root
+    mode=0644
+  when: consul_use_upstart and ansible_os_family == "Debian"
+  notify:
+    - restart consul
+
+- name: copy consul systemd script
+  template: >
+    src={{consul_systemd_template}}
+    dest=/etc/systemd/system/consul.service
+    owner=root
+    group=root
+    mode=0644
+  when: consul_use_systemd
+  notify:
+    - reload systemd
+    - restart consul
+
+- name: copy consul init.d script
+  template: >
+    src={{consul_initd_template}}
+    dest=/etc/init.d/consul
+    owner=root
+    group=root
+    mode=0644
+  when: consul_use_initd
+  notify:
+    - restart consul
+
+- name: add consul to path through profile.d
+  template: >
+    src={{consul_add_path_template}}
+    dest=/etc/profile.d/consul.sh
+    owner=root
+    group=root
+    mode=0755
+
+- name: copy consulkv script
+  template: >
+    src={{consul_kv_template}}
+    dest={{consul_home}}/bin/consulkv
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0755
+
+- name: consul config file
+  template: >
+    src={{consul_config_template}}
+    dest={{ consul_config_file }}
+    owner={{consul_user}}
+    group={{consul_group}}
+    mode=0755
+  notify:
+    - restart consul
+
+- name: add CONSUL_RPC_ADDR to .bashrc
+  lineinfile: dest="{{ consul_home }}/.bashrc" insertbefore=BOF regexp='^export CONSUL_RPC_ADDR' line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"' create=yes

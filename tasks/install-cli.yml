@@ -1,0 +1,37 @@
+- name: delete the consul-cli build directory
+  file:
+    path: "{{ consul_download_folder }}/consul-cli-master"
+    state: absent
+
+- name: download consul-cli source archive
+  get_url:
+    url: "{{ consul_cli_download }}"
+    dest: "{{ consul_download_folder }}/{{ consul_cli_archive }}"
+    force: yes
+
+- name: Unarchive consul-cli source
+  unarchive:
+    src: "{{ consul_download_folder }}/{{ consul_cli_archive }}"
+    dest: "{{ consul_download_folder }}"
+    copy: no
+
+- name: build consul-cli source code
+  shell: make
+  args:
+    chdir: "{{ consul_download_folder }}/consul-cli-master"
+    creates: consul-cli
+  environment:
+    PATH: "/usr/local/go/bin:{{ ansible_env.PATH }}"
+    GOPATH: "{{ ansible_env.HOME }}/go"
+
+- name: copy consul-cli to the bin path
+  command: "cp {{ consul_download_folder }}/consul-cli-master/bin/consul-cli {{ consul_home }}/bin/"
+  args:
+    creates: "{{ consul_home }}/bin/consul-cli"
+
+- name: set consul-cli permissions
+  file:
+    path: "{{ consul_home }}/bin/consul-cli"
+    owner: "{{ consul_user }}"
+    group: "{{ consul_group }}"
+    mode: "0755"

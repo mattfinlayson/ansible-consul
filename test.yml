@@ -1,0 +1,27 @@
+---
+
+- hosts: all
+  roles:
+    - ansible-consul
+  vars:
+    consul_is_ui: true
+    consul_is_server: true
+    consul_datacenter: "test"
+    consul_bootstrap: true
+    consul_node_name: "vagrant"
+    consul_advertise_address: "10.0.2.15"
+    nginx_remove_default: yes
+    htpasswd:
+      - name: admin
+        users:
+          - { name: admin, password: admin }
+    nginx_sites:
+      - id: consul
+        add_webroot: no
+        name: consul.local
+        rules:
+          - gzip
+          - security
+        auth:
+          name: Consul
+          file: admin

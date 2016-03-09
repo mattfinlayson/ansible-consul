@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+
+  roles:
+    - { role: ansible-consul, consul_dynamic_bind: true, consul_is_server: true }

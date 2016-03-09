@@ -1,0 +1,35 @@
+server {
+  server_name {{ consul_ui_server_name }};
+  root {{ consul_ui_dir }};
+
+  # --- listen ----------------------------------------------------------------
+
+  listen *:{{ consul_ui_server_port }};
+
+    {% if ansible_os_family == "Debian" -%}
+
+  # --- rule ------------------------------------------------------------------
+    include rules/gzip.conf;
+    include rules/security.conf;
+    {% endif %}
+
+
+  # --- locations -------------------------------------------------------------
+
+
+  location / {
+      proxy_pass http://{{ consul_client_address }}:{{ consul_port_http }};
+      {%- if consul_ui_require_auth -%}
+      auth_basic "Restricted";
+      auth_basic_user_file {{ consul_ui_auth_user_file }};
+      {% endif %}
+  }
+
+
+
+  # --- logging ---------------------------------------------------------------
+
+  error_log /var/log/nginx/error-consul.log;
+  access_log /var/log/nginx/access-consul.log;
+
+  }

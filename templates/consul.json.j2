@@ -1,0 +1,146 @@
+{
+{% if consul_is_ui == true %}
+  {% if consul_version | version_compare('0.6.1', '<') %}
+    "ui_dir": "{{ consul_ui_dir }}",
+  {% else %}
+    "ui": true,
+  {% endif %}
+{% endif %}
+{% if consul_join_at_start is defined and consul_join_at_start %}
+  "start_join": [{% for host in consul_servers | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{% endif %}
+{% if consul_retry_join|default(false) %}
+  "retry_join": [{% for host in consul_servers | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "retry_interval": "{{ consul_retry_interval }}",
+  "retry_max": {{ consul_retry_max }},
+{% endif %}
+{% if consul_join_wan|default(false) %}
+  "start_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{% endif %}
+{% if consul_retry_join_wan|default(false) %}
+  "retry_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "retry_interval_wan": "{{ consul_retry_interval_wan }}",
+  "retry_max_wan": {{ consul_retry_max_wan }},
+{% endif %}
+{% if consul_disable_remote_exec is defined %}
+  "disable_remote_exec": {{ "true" if consul_disable_remote_exec else "false" }},
+{% endif %}
+  "domain": "{{ consul_domain }}",
+  "data_dir": "{{ consul_data_dir }}",
+{% if consul_dns_config is defined %}
+  "dns_config": {
+    "allow_stale": {{ "true" if consul_dns_allow_stale else "false" }},
+    "max_stale": "{{ consul_dns_max_stale }}",
+    "node_ttl": "{{ consul_dns_node_ttl }}",
+    "service_ttl": {
+      "*": "{{ consul_dns_service_ttl }}"
+    },
+    "enable_truncate": {{ "true" if consul_dns_enable_truncate else "false" }},
+    "only_passing": {{ "true" if consul_dns_only_passing else "false" }}
+  },
+{% endif %}
+{% if (consul_recursors is defined) and consul_recursors %}
+    "recursors": [{% for host in consul_recursors %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+{% endif %}
+  "log_level": "{{ consul_log_level }}",
+{% if consul_syslog %}
+  "enable_syslog": true,
+{% endif %}
+{% if consul_node_name is defined %}
+  "node_name": "{{ consul_node_name }}",
+{% endif %}
+  "server": {{ "true" if consul_is_server else "false" }},
+{% if consul_client_address_bind and consul_client_address is defined and consul_client_address is not none %}
+  "client_addr": "{{ consul_client_address }}",
+  "addresses" : {
+    "rpc": "127.0.0.1"
+  },
+{% endif %}
+{% if consul_dynamic_bind == false and consul_bind_address is defined and consul_bind_address is not none %}
+  "bind_addr": "{{ consul_bind_address }}",
+{% endif %}
+{% if consul_advertise_address is defined %}
+  "advertise_addr": "{{ consul_advertise_address }}",
+{% endif %}
+{% if consul_advertise_address_wan|default(false) %}
+  "advertise_addr_wan": "{{ consul_advertise_address_wan }}",
+{% endif %}
+  "datacenter": "{{ consul_datacenter }}",
+{% if consul_is_server and consul_bootstrap is defined %}
+  "bootstrap": {{ "true" if consul_bootstrap else "false" }},
+{% endif %}
+{% if consul_is_server and consul_bootstrap_expect is defined %}
+  "bootstrap_expect": {{ consul_bootstrap_expect }},
+{% endif %}
+{% if consul_encrypt_key is defined %}
+  "encrypt": "{{ consul_encrypt_key }}",
+{% endif %}
+{% if consul_watches is defined %}
+  "watches": {{ consul_watches|to_nice_json }},
+{% endif %}
+{% if consul_encrypt is defined %}
+  "encrypt": "{{ consul_encrypt }}",
+{% endif %}
+{% if consul_is_server and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined %}
+  "cert_file": "{{ consul_cert_file }}",
+  "key_file": "{{ consul_key_file }}",
+  "ca_file": "{{ consul_ca_file }}",
+  "verify_incoming": true,
+  "verify_outgoing": true,
+  "verify_server_hostname": {{ consul_verify_server_hostname|lower }},
+{% endif %}
+{% if consul_is_server == false and consul_cert_file is defined and consul_key_file is defined and consul_ca_file is defined %}
+  "cert_file": "{{ consul_cert_file }}",
+  "key_file": "{{ consul_key_file }}",
+  "ca_file": "{{ consul_ca_file }}",
+  "verify_outgoing": true,
+{% endif %}
+  "ports": {
+    "dns": {{ consul_port_dns }},
+    "http": {{ consul_port_http }},
+    "https": {{ consul_port_https }},
+    "rpc": {{ consul_port_rpc }},
+    "serf_lan": {{ consul_port_serf_lan }},
+    "serf_wan": {{ consul_port_serf_wan }},
+    "server": {{ consul_port_server }}
+  },
+{% if consul_atlas_infrastructure is defined and consul_atlas_infrastructure %}
+  "atlas_infrastructure": "{{ consul_atlas_infrastructure }}",
+  "atlas_token": "{{ consul_atlas_token }}",
+  {% if consul_atlas_join is defined %}
+  "atlas_join": true,
+  {% endif %}
+{% endif %}
+{% if consul_acl_datacenter is defined %}
+  "acl_datacenter": "{{ consul_acl_datacenter }}",
+{% endif %}
+{% if consul_acl_default_policy is defined %}
+  "acl_default_policy": "{{ consul_acl_default_policy }}",
+{% endif %}
+{% if consul_acl_down_policy is defined %}
+  "acl_down_policy": "{{ consul_acl_down_policy }}",
+{% endif %}
+{% if consul_acl_master_token is defined %}
+  "acl_master_token": "{{ consul_acl_master_token }}",
+{% endif %}
+{% if consul_acl_token is defined %}
+  "acl_token": "{{ consul_acl_token }}",
+{% endif %}
+{% if consul_acl_ttl is defined %}
+  "acl_ttl": "{{ consul_acl_ttl }}",
+{% endif %}
+{% if consul_atlas_acl_token is defined %}
+  "atlas_acl_token": "{{ consul_atlas_acl_token }}",
+{% endif %}
+{% if consul_statsd_address is defined %}
+  "statsd_addr": "{{ consul_statsd_address }}",
+{% endif %}
+{% if consul_statsite_address is defined %}
+  "statsite_addr": "{{ consul_statsite_address }}",
+{% endif %}
+{% if consul_statsite_prefix is defined %}
+  "statsite_prefix": "{{ consul_statsite_prefix }}",
+{% endif %}
+  "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
+  "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
+}

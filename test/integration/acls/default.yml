@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+
+  roles:
+    - { role: ansible-consul,
+        consul_is_server: true,
+        consul_acl_datacenter: "my_datacenter",
+        consul_acl_default_policy: "deny",
+        consul_acl_down_policy: "extend-cache",
+        consul_acl_master_token: "my_bogus_token",
+        consul_acl_token: "my_bogus_agent_token",
+        consul_acl_ttl: "5m",
+        consul_atlas_acl_token: "my_bogus_atlas_token"
+      }
