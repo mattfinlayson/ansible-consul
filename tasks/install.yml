@@ -160,7 +160,7 @@
     dest=/etc/init.d/consul
     owner=root
     group=root
-    mode=0644
+    mode=0755
   when: consul_use_initd
   notify:
     - restart consul
