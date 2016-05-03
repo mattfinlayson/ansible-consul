@@ -174,9 +174,9 @@ See [https://www.consul.io/docs/agent/encryption.html](https://www.consul.io/doc
 These files will be created on your Consul host:
 
 ```yml
-consul_cert_file: "{{ consul_home }}/cert/consul.crt",
-consul_key_file: "{{ consul_home }}/cert/consul.key",
-consul_ca_file: "{{ consul_home }}/cert/ca.crt",
+consul_cert_file: "{{ consul_home }}/cert/consul.crt"
+consul_key_file: "{{ consul_home }}/cert/consul.key"
+consul_ca_file: "{{ consul_home }}/cert/ca.crt"
 ```
 
 When you provide these vars. You should use Ansible Vault to encrypt these vars or perhaps pass them on the command line.
