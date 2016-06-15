@@ -112,3 +112,5 @@ consul_node_name: "{{ inventory_hostname }}"
 # Set to true to enable hostname verification via TLS
 consul_verify_server_hostname: false
 consul_cors_support: false
+# keep undefined for default behavior (will depend on agent/server role starting with consul 0.7)
+# consul_skip_leave_on_interrupt: false

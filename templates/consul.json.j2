@@ -148,4 +148,7 @@
 {% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }}
+{% if consul_skip_leave_on_interrupt is defined %}
+  "skip_leave_on_interrupt": {{ "true" if consul_skip_leave_on_interrupt else "false" }}
+{% endif %}
 }
