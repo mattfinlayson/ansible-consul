@@ -141,7 +141,7 @@
     mode=0644
   when: consul_use_upstart and ansible_os_family == "Debian"
   notify:
-    - restart consul
+    - "{{ consul_restart_handler }}"
 
 - name: copy consul systemd script
   template: >
@@ -153,7 +153,7 @@
   when: consul_use_systemd
   notify:
     - reload systemd
-    - restart consul
+    - "{{ consul_restart_handler }}"
 
 - name: copy consul init.d script
   template: >
@@ -164,7 +164,7 @@
     mode=0755
   when: consul_use_initd
   notify:
-    - restart consul
+    - "{{ consul_restart_handler }}"
 
 - name: add consul to path through profile.d
   template: >
@@ -190,7 +190,7 @@
     group={{consul_group}}
     mode=0755
   notify:
-    - restart consul
+    - "{{ consul_restart_handler }}"
 
 - name: add CONSUL_RPC_ADDR to .bashrc
   lineinfile: >
