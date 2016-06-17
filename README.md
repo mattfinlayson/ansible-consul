@@ -259,6 +259,25 @@ These are the handlers that are defined in `handlers/main.yml`.
     - ansible-consul
 ```
 
+## Example playbook that configures a Consul server on Ubuntu with [runit](https://github.com/gitinsky/ansible-role-runit)
+```yml
+- hosts: all
+  vars:
+    consul_reload_config_handler: runit reload consul
+    consul_restart_handler: runit restart consul
+    consul_log_file: /dev/null
+  roles:
+    - ansible-consul
+    - role: runit
+      runit_pre_start_command: "setcap CAP_NET_BIND_SERVICE=+eip /opt/consul/bin/consul"
+      runit_service_command: "/opt/consul/bin/consul"
+      runit_service_params: "agent -config-dir /etc/consul.d -config-file=/etc/consul.conf"
+      runit_service_env:
+        GOMAXPROCS: "{{ ansible_processor_vcpus }}"
+```
+
+Logs will be handled by runit and ```consul_log_file``` set to ```/dev/null``` just to prevent ```/var/log/consul``` file creation as it conflicts with runit logs directory.
+
 ## Example playbooks that configures a Consul server on CentOS 7
 
 ```yml
