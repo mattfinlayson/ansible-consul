@@ -2,17 +2,25 @@
 galaxy_info:
   author: Matthew Finlayson
   description: Installs and configures consul
-  company: Jive Software
+  license: Apache
   platforms:
     - name: Ubuntu
       versions:
-        - All
+        - 12.04
+        - 14.04
+        - 15.10
+        - 16.04
     - name: EL
       versions:
         - 6
         - 7
-  categories:
+  galaxy_tags:
     - system
+    - cloud
+    - clustering
+    - networking
+    - web
+  min_ansible_version: 1.2
 dependencies:
   - { role: geerlingguy.repo-epel, when: ansible_os_family == "RedHat" }
   - { role: franklinkim.nginx, when: consul_install_nginx == true and ansible_os_family == "Debian" }
