@@ -113,7 +113,7 @@ consul_retry_join_wan: false
 consul_retry_interval_wan: 30s
 consul_retry_max_wan: 0
 consul_advertise_address_wan: false
-
+consul_advertise_address: "127.0.0.1" - default: `undefined`. If this variable is not defined it is not set in the config
 consul_bind_address: "0.0.0.0"
 consul_dynamic_bind: false
 consul_client_address: "127.0.0.1"
