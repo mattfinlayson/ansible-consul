@@ -6,10 +6,10 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - 12.04
-        - 14.04
-        - 15.10
-        - 16.04
+        - precise
+        - trusty
+        - wily
+        - xenial
     - name: EL
       versions:
         - 6
