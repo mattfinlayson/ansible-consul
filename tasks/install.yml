@@ -40,6 +40,7 @@
   group: >
     name={{consul_group}}
     state=present
+    system=yes
   register: consul_group_created
 
 - name: create consul user
