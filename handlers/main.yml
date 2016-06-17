@@ -4,12 +4,12 @@
   when: consul_manage_service
 
 - name: reload consul config
-  sudo: yes
+  become: yes
   command: pkill -1 consul
   when: consul_service_state is not "stopped" and consul_manage_service
 
 - name: reload systemd
-  sudo: yes
+  become: yes
   command: systemctl daemon-reload
 
 - name: restart dnsmasq
