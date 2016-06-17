@@ -30,6 +30,10 @@ sudo setcap CAP_NET_BIND_SERVICE=+eip {{ consul_home }}/bin/consul; exec sudo -u
   >> {{ consul_log_file }} 2>&1
 end script
 
+{% if consul_leave_on_terminate -%}
+pre-stop exec {{ consul_home }}/bin/consul leave
+{% endif -%}
+
 respawn
 respawn limit 10 10
 
