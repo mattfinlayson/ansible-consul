@@ -146,7 +146,7 @@ consul_dnsmasq:
 consul_node_name: "{{ inventory_hostname }}"
 consul_verify_server_hostname: false
 consul_cors_support: false
-disable_update_check: false
+consul_disable_update_check: false
 ```
 
 An instance might be defined through:
