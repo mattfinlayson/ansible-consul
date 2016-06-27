@@ -199,5 +199,6 @@
     regexp='^export CONSUL_RPC_ADDR' 
     line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"' 
     create=yes
-    become=yes
-    become_user={{ consul_user }}
+    owner={{consul_user}}
+    group={{consul_group}}
+  become: yes
