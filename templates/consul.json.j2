@@ -36,10 +36,10 @@
       "*": "{{ consul_dns_service_ttl }}"
     },
     "enable_truncate": {{ "true" if consul_dns_enable_truncate else "false" }},
-    "only_passing": {{ "true" if consul_dns_only_passing else "false" }}
     {%- if (consul_udp_answer_limit is defined) %}
-    "udp_answer_limit": {{ consul_udp_answer_limit }}
+    "udp_answer_limit": {{ consul_udp_answer_limit }},
     {%- endif %}
+    "only_passing": {{ "true" if consul_dns_only_passing else "false" }}
   },
 {% endif %}
 {% if (consul_recursors is defined) and consul_recursors %}
