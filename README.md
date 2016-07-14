@@ -224,6 +224,7 @@ consul_dns_max_stale: 5s
 consul_dns_node_ttl: 0s
 consul_dns_service_ttl: 0s
 consul_dns_enable_truncate: false
+consul_udp_answer_limit: 3
 consul_dns_only_passing: false
 consul_recursors:
   - 8.8.8.8
