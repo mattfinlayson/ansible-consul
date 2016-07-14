@@ -68,6 +68,12 @@
     mode=0755
   when: consul_is_ui and consul_install_nginx_config and ansible_os_family == "RedHat"
 
+- name: Install python module to manage selinux
+  package:
+    name: libsemanage-python
+    state: present
+  when: consul_is_ui and consul_install_nginx_config and ansible_os_family == "RedHat"
+
 - name: allow nginx to connect to consul (selinux)
   seboolean: name=httpd_can_network_connect state=yes persistent=yes
   when: consul_is_ui and consul_install_nginx_config and ansible_selinux
