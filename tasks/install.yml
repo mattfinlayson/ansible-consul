@@ -101,6 +101,8 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0600
+  notify:
+    - "{{ consul_restart_handler }}"
   when: consul_tls_key is defined
 
 - name: create TLS cert
@@ -111,6 +113,8 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0600
+  notify:
+    - "{{ consul_restart_handler }}"
   when: consul_tls_cert is defined
 
 - name: create TLS root CA cert
@@ -121,6 +125,8 @@
     owner={{consul_user}}
     group={{consul_group}}
     mode=0600
+  notify:
+    - "{{ consul_restart_handler }}"
   when: consul_tls_ca_cert is defined
 
 - name: set ownership
