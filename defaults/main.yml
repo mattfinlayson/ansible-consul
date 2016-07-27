@@ -118,3 +118,7 @@ consul_cors_support: false
 # keep undefined for default behavior (will depend on agent/server role starting with consul 0.7)
 # consul_skip_leave_on_interrupt: false
 consul_disable_update_check: false
+
+# Define Consul services to add to /etc/consul.d/*
+consul_services: {}
+consul_services_mode: 0640

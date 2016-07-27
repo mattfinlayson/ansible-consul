@@ -4,4 +4,9 @@
 - { include: install-cli.yml, when: consul_install_consul_cli == true }
 - { include: dnsmasq.yml, when: consul_install_dnsmasq == true }
 - { include: consulate.yml, when: consul_install_consulate == true }
-- include: service.yml
+- service: >
+    name=consul
+    state="{{ consul_service_state }}"
+    enabled=yes
+  when: consul_manage_service
+- { include: services.yml, when: consul_services is defined and consul_services|length > 0 }
