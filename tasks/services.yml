@@ -1,0 +1,10 @@
+---
+- name: 'Installing consul services to {{ consul_config_dir }}'
+  copy:
+    dest: '{{ consul_config_dir }}/{{ item.service.name.split() | join("_") }}_{{ item.service.port }}.json'
+    owner: '{{ consul_user }}'
+    group: '{{ consul_group }}'
+    mode: '{{ consul_services_mode }}'
+    content: '{{ item | to_json }}'
+  with_items: '{{ consul_services }}'
+  notify: restart consul

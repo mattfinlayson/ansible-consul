@@ -308,6 +308,22 @@ Logs will be handled by runit and ```consul_log_file``` set to ```/dev/null``` j
     - ansible-consul
 ```
 
+## Example to register consul services
+
+```yml
+consul_services:
+  - service:
+      name: "redis localhost"
+      tags:
+        - "redis"
+      address: "127.0.0.1"
+      port: 6379
+      checks:
+        - name: "Redis health check"
+          tcp: "localhost:6379"
+          interval: "10s"
+          timeout: "1s"
+```
 
 ## Testing
 
