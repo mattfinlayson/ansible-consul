@@ -14,3 +14,9 @@
 
 - name: restart dnsmasq
   service: name=dnsmasq state=restarted enabled=yes
+
+# Need to override handler defined in both franklinkim.nginx and geerlingguy.nginx
+# because Ansible arbitrarily picks one handler to run and the franklinkim.nginx
+# handler has a state guard that will not be defined on RedHat systems
+- name: consul reload nginx
+  service: name=nginx state=reloaded
