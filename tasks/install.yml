@@ -146,7 +146,7 @@
     owner=root
     group=root
     mode=0644
-  when: consul_use_upstart and ansible_os_family == "Debian"
+  when: consul_use_upstart
   notify:
     - "{{ consul_restart_handler }}"
 
