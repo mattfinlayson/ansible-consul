@@ -57,6 +57,7 @@
     path={{ item }}
     owner={{consul_user}}
     group={{consul_group}}
+    mode=0755
   with_items:
     - "{{ consul_home }}"
     - "{{ consul_home }}/bin"
