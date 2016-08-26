@@ -28,6 +28,8 @@ consul_cli_download: "https://github.com/CiscoCloud/consul-cli/archive/{{ consul
 consul_home: /opt/consul
 consul_config_dir: /etc/consul.d
 consul_config_file: /etc/consul.conf
+# World readable for backward compatibility; set to 0600 if using consul_encrypt_key
+consul_config_file_mode: 0644
 consul_log_file: /var/log/consul
 consul_data_dir: "{{ consul_home }}/data"
 
