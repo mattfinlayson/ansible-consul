@@ -128,3 +128,6 @@ consul_disable_update_check: false
 # Define Consul services to add to /etc/consul.d/*
 consul_services: {}
 consul_services_mode: 0640
+
+consul_rpc_address: 127.0.0.1
+consul_http_address: 127.0.0.1

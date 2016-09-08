@@ -53,12 +53,11 @@
   "node_name": "{{ consul_node_name }}",
 {% endif %}
   "server": {{ "true" if consul_is_server else "false" }},
-{% if consul_client_address_bind and consul_client_address is defined and consul_client_address is not none %}
   "client_addr": "{{ consul_client_address }}",
   "addresses" : {
-    "rpc": "127.0.0.1"
+    "rpc": "{{ consul_rpc_address }}",
+    "http": "{{ consul_http_address }}"
   },
-{% endif %}
 {% if consul_dynamic_bind == false and consul_bind_address is defined and consul_bind_address is not none %}
   "bind_addr": "{{ consul_bind_address }}",
 {% endif %}
