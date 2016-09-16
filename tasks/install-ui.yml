@@ -36,6 +36,14 @@
     recurse=yes
   when: consul_ui_was_downloaded|changed
 
+- name: remove default nginx config
+  file: >
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  when: consul_install_nginx_config and ansible_os_family == "Debian"
+  notify:
+    - consul reload nginx
+
 - name: consul nginx config
   template: >
     src={{consul_ui_nginx_template}}
