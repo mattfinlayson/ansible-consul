@@ -40,7 +40,7 @@
   file: >
     path=/etc/nginx/sites-enabled/default
     state=absent
-  when: consul_install_nginx_config and ansible_os_family == "Debian" and not consul_ui_server_name
+  when: consul_install_nginx_config and ansible_os_family == "Debian" and consul_ui_server_name is not defined
   notify:
     - consul reload nginx
 
