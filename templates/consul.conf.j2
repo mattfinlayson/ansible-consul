@@ -20,7 +20,7 @@ script
 
   # Set GOMAXPROCS to use all our CPUs, because Consul can block a scheduler thread
   # Use su to become consul user non-interactively on old Upstart versions (see http://superuser.com/a/234541/76168)
-  exec su -s /bin/sh -c 'GOMAXPROCS=`nproc` exec "$0" "$@" &>>{{ consul_log_file }}' consul -- /opt/consul/bin/consul agent \
+  exec su -s /bin/sh -c 'GOMAXPROCS=`nproc` exec "$0" "$@"' consul -- /opt/consul/bin/consul agent \
 {% if consul_dynamic_bind %}
     -bind=$BIND \
 {% endif %}
@@ -28,7 +28,8 @@ script
     -client=$CLIENT_BIND \
 {% endif %}
     -config-dir={{ consul_config_dir }} \
-    -config-file={{ consul_config_file }}
+    -config-file={{ consul_config_file }} \
+>> {{ consul_log_file }} 2>&1
 end script
 
 {% if consul_leave_on_terminate -%}
