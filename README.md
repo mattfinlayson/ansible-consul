@@ -213,6 +213,8 @@ consul_statsd_address: "127.0.0.1:8125"
 consul_statsite_address: "127.0.0.1:8125"
 # this sets the prefix consul uses for all metrics
 consul_statsite_prefix: "consul"
+# if you don't want to prepend runtime telemetry with the machine's hostname (consul 0.6.4 or later)
+consul_telemetry_disable_hostname: true
 ```
 
 ## DNS Variables
