@@ -24,7 +24,7 @@
   unarchive: >
     src={{ consul_download_folder }}/{{ consul_ui_archive }}
     dest={{ consul_ui_dir }}
-    copy=no
+    copy=false
   when: consul_ui_was_downloaded|changed
 
 - name: set ownership

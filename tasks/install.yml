@@ -91,7 +91,7 @@
   unarchive: >
     src={{ consul_download_folder }}/{{ consul_archive }}
     dest={{ consul_home }}/bin
-    copy=no
+    copy=false
   when: consul_was_downloaded|changed
 
 - name: create TLS key
@@ -202,9 +202,9 @@
 - name: add CONSUL_RPC_ADDR to .bashrc
   lineinfile: >
     dest={{ consul_home }}/.bashrc
-    insertbefore=BOF 
-    regexp='^export CONSUL_RPC_ADDR' 
-    line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"' 
+    insertbefore=BOF
+    regexp='^export CONSUL_RPC_ADDR'
+    line='export CONSUL_RPC_ADDR="{{ consul_client_address }}:{{ consul_port_rpc }}"'
     create=yes
     owner={{consul_user}}
     group={{consul_group}}
