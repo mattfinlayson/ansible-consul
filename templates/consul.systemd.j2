@@ -8,6 +8,8 @@ Environment="GOMAXPROCS=`nproc`"
 Restart=on-failure
 User={{ consul_user }}
 Group={{ consul_group }}
+PermissionsStartOnly=true
+ExecStartPre=/sbin/setcap CAP_NET_BIND_SERVICE=+eip /opt/consul/bin/consul
 ExecStart={{ consul_home }}/bin/consul agent -config-dir {{ consul_config_dir }} -config-file={{ consul_config_file }}
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
