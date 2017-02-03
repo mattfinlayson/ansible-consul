@@ -16,7 +16,7 @@
   unarchive:
     src: "{{ consul_download_folder }}/{{ consul_cli_archive }}"
     dest: "{{ consul_download_folder }}"
-    copy: no
+    copy: false
   when: cli_download.changed
 
 - name: build consul-cli source code
