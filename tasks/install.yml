@@ -195,7 +195,7 @@
     dest={{ consul_config_file }}
     owner={{consul_user}}
     group={{consul_group}}
-    mode=0755
+    mode={{consul_config_file_mode}}
   notify:
     - "{{ consul_restart_handler }}"
 
