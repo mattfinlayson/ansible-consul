@@ -303,7 +303,9 @@ Logs will be handled by runit and ```consul_log_file``` set to ```/dev/null``` j
     consul_datacenter: "test"
     consul_bootstrap: "true"
     consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
+    consul_use_upstart: false
     consul_use_systemd: true
+    nginx_user: "nginx"
   roles:
     - ansible-consul
 ```
