@@ -1,8 +1,8 @@
 # Consul Agent (Upstart unit)
 description "Consul Agent"
 
-start on (local-filesystems and net-device-up IFACE!=lo)
-stop on runlevel [016]
+start on {{ consul_upstart_start_on }}
+stop on {{ consul_upstart_stop_on }}
 
 script
 {% if consul_dynamic_bind %}
