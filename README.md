@@ -107,6 +107,9 @@ consul_retry_join: false
 consul_retry_interval: 30s
 consul_retry_max: 0
 
+consul_retry_join_ec2: false
+consul_retry_join_gce: false
+
 consul_servers_wan: []
 consul_join_wan: false
 consul_retry_join_wan: false
@@ -232,6 +235,26 @@ consul_recursors:
   - 8.8.8.8
   - 8.8.4.4
 ```
+
+## ACL Variables
+
+You can configure Consul to use [ACL](https://www.consul.io/docs/internals/acl.html)'s.
+
+Below are some variables that you can use to set it up. See the [official documentation](https://www.consul.io/docs/agent/options.html#acl_datacenter) for their meaning.
+
+Variables available for use, not defined by default:
+```yml
+consul_acl_enforce_version_8: false
+consul_acl_datacenter: 'test'
+consul_acl_default_policy: 'allow'
+consul_acl_down_policy: 'allow'
+consul_acl_master_token: 'generated_uuid_here'
+consul_acl_token: 'generated_uuid_here'
+consul_acl_ttl: 30
+consul_atlas_acl_token: 'anonymous'
+```
+
+
 ## Cross-origin Resource Sharing
 Consul allows adding headers to the HTTP API responses, to enable [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) set the `consul_cors_support` variable to `true`
 

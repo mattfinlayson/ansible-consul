@@ -81,6 +81,9 @@ consul_retry_join: false
 consul_retry_interval: 30s
 consul_retry_max: 0
 
+consul_retry_join_ec2: false
+consul_retry_join_gce: false
+
 consul_servers_wan: []
 consul_join_wan: false
 consul_retry_join_wan: false
