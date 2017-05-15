@@ -140,7 +140,7 @@
   {% endif %}
 {% endif %}
 {% if consul_acl_enforce_version_8 is defined %}
-  "acl_enforce_version_8": "{{ consul_acl_enforce_version_8 }}",
+  "acl_enforce_version_8": {{ "true" if consul_acl_enforce_version_8 else "false" }},
 {% endif %}
 {% if consul_acl_datacenter is defined %}
   "acl_datacenter": "{{ consul_acl_datacenter }}",
