@@ -22,7 +22,9 @@
     {% if consul_ec2_secret_access_key is defined %}
     "secret_access_key": "{{ consul_ec2_secret_access_key }}",
     {% endif %}
+    {% if consul_ec2_region is defined %}
     "region": "{{ consul_ec2_region }}",
+    {% endif %}
     "tag_key": "{{ consul_ec2_tag_key }}",
     "tag_value": "{{ consul_ec2_tag_value }}"
   },
@@ -37,7 +39,7 @@
     "tag_value": "{{ consul_gce_tag_value }}"
   },
 {% endif %}
-{{% if consul_join_wan|default(false) %}
+{% if consul_join_wan|default(false) %}
   "start_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
 {% endif %}
 {% if consul_retry_join_wan|default(false) %}
