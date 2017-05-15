@@ -14,6 +14,31 @@
   "retry_interval": "{{ consul_retry_interval }}",
   "retry_max": {{ consul_retry_max }},
 {% endif %}
+{% if consul_retry_join_ec2|default(false) %}
+  "retry_join_ec2": {
+    {% if consul_ec2_access_key is defined %}
+    "access_key_id": "{{ consul_ec2_access_key }}",
+    {% endif %}
+    {% if consul_ec2_secret_access_key is defined %}
+    "secret_access_key": "{{ consul_ec2_secret_access_key }}",
+    {% endif %}
+    {% if consul_ec2_region is defined %}
+    "region": "{{ consul_ec2_region }}",
+    {% endif %}
+    "tag_key": "{{ consul_ec2_tag_key }}",
+    "tag_value": "{{ consul_ec2_tag_value }}"
+  },
+{% endif %}
+{% if consul_retry_join_gce|default(false) %}
+  "retry_join_gce": {
+    {% if consul_gce_credentials_file is defined %}
+    "credentials_file": "{{ consul_gce_credentials_file }}",
+    {% endif %}
+    "project_name": "{{ consul_gce_project_name }}",
+    "zone_pattern": "{{ consul_gce_zone_pattern }}",
+    "tag_value": "{{ consul_gce_tag_value }}"
+  },
+{% endif %}
 {% if consul_join_wan|default(false) %}
   "start_join_wan": [{% for host in consul_servers_wan | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
 {% endif %}
@@ -113,6 +138,9 @@
   {% if consul_atlas_join is defined %}
   "atlas_join": true,
   {% endif %}
+{% endif %}
+{% if consul_acl_enforce_version_8 is defined %}
+  "acl_enforce_version_8": {{ "true" if consul_acl_enforce_version_8 else "false" }},
 {% endif %}
 {% if consul_acl_datacenter is defined %}
   "acl_datacenter": "{{ consul_acl_datacenter }}",
