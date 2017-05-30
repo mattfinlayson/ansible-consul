@@ -1,14 +1,11 @@
 ---
-- name: update apt
-  apt: >
-    update_cache=yes
-    cache_valid_time=3600
-  when: ansible_os_family == "Debian"
 
 - name: install deps (Ubuntu)
   apt: >
     pkg={{item}}
     state=installed
+    update_cache=yes
+    cache_valid_time={{ consul_apt_cache_valid_time }}
   with_items:
     - unzip
     - jq
