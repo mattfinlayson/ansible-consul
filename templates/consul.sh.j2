@@ -1,2 +1,4 @@
 export PATH={{ consul_home }}/bin:${PATH}
 export CONSUL_HOME={{ consul_home }}
+export CONSUL_HTTP_ADDR=$(hostname -I | awk '{print $1}'):{{ consul_port_http }}
+export CONSUL_HTTP_TOKEN={{ consul_acl_master_token }}

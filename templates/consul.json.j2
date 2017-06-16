@@ -55,9 +55,6 @@
   "server": {{ "true" if consul_is_server else "false" }},
 {% if consul_client_address_bind and consul_client_address is defined and consul_client_address is not none %}
   "client_addr": "{{ consul_client_address }}",
-  "addresses" : {
-    "rpc": "127.0.0.1"
-  },
 {% endif %}
 {% if consul_dynamic_bind == false and consul_bind_address is defined and consul_bind_address is not none %}
   "bind_addr": "{{ consul_bind_address }}",
@@ -102,7 +99,6 @@
     "dns": {{ consul_port_dns }},
     "http": {{ consul_port_http }},
     "https": {{ consul_port_https }},
-    "rpc": {{ consul_port_rpc }},
     "serf_lan": {{ consul_port_serf_lan }},
     "serf_wan": {{ consul_port_serf_wan }},
     "server": {{ consul_port_server }}
