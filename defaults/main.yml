@@ -122,3 +122,11 @@ consul_disable_update_check: false
 # Define Consul services to add to /etc/consul.d/*
 consul_services: {}
 consul_services_mode: 0640
+
+# Don't enable consul_acl_replication by default
+consul_acl_replication: false
+
+## Consul 0.8.x
+acl_enforce_version_8: false
+disable_host_node_id: true
+raft_protocol: 3

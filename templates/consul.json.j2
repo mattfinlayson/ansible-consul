@@ -122,6 +122,12 @@
 {% if consul_acl_master_token is defined %}
   "acl_master_token": "{{ consul_acl_master_token }}",
 {% endif %}
+{% if consul_acl_replication|default(false) and consul_acl_datacenter is defined and consul_acl_datacenter|string() != consul_datacenter|string() %}
+  "acl_replication_token": "{{ acl_replication_token }}",
+{% endif %}
+  "acl_enforce_version_8": {{ acl_enforce_version_8 }},
+  "disable_host_node_id": {{ disable_host_node_id }},
+  "raft_protocol": {{ raft_protocol }},
 {% if consul_acl_token is defined %}
   "acl_token": "{{ consul_acl_token }}",
 {% endif %}
