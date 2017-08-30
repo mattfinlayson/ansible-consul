@@ -24,7 +24,8 @@ script
 {% if consul_dynamic_bind %}
     -bind=$BIND \
 {% endif %}
-{% if consul_client_address_bind %}
+{# In case 'consul_client_address' is set, will only configure it in /etc/consul.conf, not here #}
+{% if consul_client_address_bind and not consul_client_address %}
     -client=$CLIENT_BIND \
 {% endif %}
     -config-dir={{ consul_config_dir }} \
