@@ -267,9 +267,9 @@ These are the handlers that are defined in `handlers/main.yml`.
 
 - hosts: all
   vars:
-    consul_is_server: "true"
+    consul_is_server: true
     consul_datacenter: "test"
-    consul_bootstrap: "true"
+    consul_bootstrap: true
     consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
   roles:
     - ansible-consul
@@ -301,9 +301,9 @@ Logs will be handled by runit and ```consul_log_file``` set to ```/dev/null``` j
 
 - hosts: all
   vars:
-    consul_is_server: "true"
+    consul_is_server: true
     consul_datacenter: "test"
-    consul_bootstrap: "true"
+    consul_bootstrap: true
     consul_bind_address: "{{ ansible_default_ipv4['address'] }}"
     consul_use_upstart: false
     consul_use_systemd: true
