@@ -1,10 +1,10 @@
 {
 {% if consul_is_ui == true %}
-  {% if consul_version | version_compare('0.6.1', '<') %}
-    "ui_dir": "{{ consul_ui_dir }}",
-  {% else %}
-    "ui": true,
-  {% endif %}
+{% if consul_version | version_compare('0.6.1', '<') %}
+  "ui_dir": "{{ consul_ui_dir }}",
+{% else %}
+  "ui": true,
+{% endif %}
 {% endif %}
 {% if consul_join_at_start is defined and consul_join_at_start %}
   "start_join": [{% for host in consul_servers | difference(ansible_all_ipv4_addresses) %}"{{host}}"{% if not loop.last %}, {% endif %}{% endfor %}],
@@ -36,9 +36,9 @@
       "*": "{{ consul_dns_service_ttl }}"
     },
     "enable_truncate": {{ "true" if consul_dns_enable_truncate else "false" }},
-    {%- if (consul_udp_answer_limit is defined) %}
+    {% if (consul_udp_answer_limit is defined) -%}
     "udp_answer_limit": {{ consul_udp_answer_limit }},
-    {%- endif %}
+    {% endif -%}
     "only_passing": {{ "true" if consul_dns_only_passing else "false" }}
   },
 {% endif %}
@@ -102,7 +102,9 @@
     "dns": {{ consul_port_dns }},
     "http": {{ consul_port_http }},
     "https": {{ consul_port_https }},
+{% if consul_download_version|version_compare('1.0.0', '<') %}
     "rpc": {{ consul_port_rpc }},
+{% endif %}
     "serf_lan": {{ consul_port_serf_lan }},
     "serf_wan": {{ consul_port_serf_wan }},
     "server": {{ consul_port_server }}
@@ -149,7 +151,7 @@
     "disable_hostname": {{ "true" if consul_telemetry_disable_hostname else "false" }}
   },
 {% endif %}
-{% if consul_cors_support is defined %}
+{% if consul_cors_support is defined and consul_download_version|version_compare('1.0.0', '<') %}
   "http_api_response_headers": {
         "Access-Control-Allow-Origin": "*"
   },
@@ -159,6 +161,10 @@
 {% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }},
+{% if consul_ui_server_ip is defined %}
+  "addresses": {
+      "http": "{{ consul_ui_server_ip }}"
+  },
+{% endif %}
   "disable_update_check": {{ "true" if consul_disable_update_check else "false" }}
-
 }

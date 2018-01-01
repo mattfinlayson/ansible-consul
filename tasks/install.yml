@@ -1,4 +1,24 @@
 ---
+- name: get download page
+  uri:
+      url: "https://www.consul.io/downloads.html"
+      method: GET
+      return_content: yes
+  register: download_html
+  when: consul_version == 'latest'
+
+- set_fact: consul_download_version="{{ download_html|replace('\n','')|regex_replace('.*(https://github\.com/hashicorp/consul/blob/v([0-9,.]+)/CHANGELOG\.md).*', '\2') }}"
+  when: consul_version == 'latest'
+
+- set_fact: consul_download_version="{{ consul_version }}"
+  when: consul_version != 'latest'
+  
+- set_fact:
+    consul_archive: "consul_{{ consul_download_version }}_linux_amd64.zip"
+    consul_download: "https://releases.hashicorp.com/consul/{{ consul_download_version }}/consul_{{ consul_download_version }}_linux_amd64.zip"
+    consul_ui_archive: "consul_{{ consul_download_version }}_web_ui.zip"
+    consul_ui_download: "https://releases.hashicorp.com/consul/{{ consul_download_version }}/consul_{{ consul_download_version }}_web_ui.zip"
+
 - name: update apt
   apt: >
     update_cache=yes
