@@ -161,5 +161,10 @@
 {% endif %}
   "rejoin_after_leave": {{ "true" if consul_rejoin_after_leave else "false" }},
   "leave_on_terminate": {{ "true" if consul_leave_on_terminate else "false" }},
+{% if consul_ui_server_ip is defined %}
+  "addresses": {
+      "http": "{{ consul_ui_server_ip }}"
+  },
+{% endif %}
   "disable_update_check": {{ "true" if consul_disable_update_check else "false" }}
 }

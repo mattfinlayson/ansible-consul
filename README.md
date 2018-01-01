@@ -154,6 +154,8 @@ An instance might be defined through:
 ```yml
 # enable ui
 consul_is_ui: true
+# set ui listen ip
+consul_ui_server_ip: 0.0.0.0 (127.0.0.1 if not defined)
 # start as a server
 consul_is_server: true
 # name datacenter
