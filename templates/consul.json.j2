@@ -1,6 +1,6 @@
 {
 {% if consul_is_ui == true %}
-  {% if consul_version | version_compare('0.6.1', '<') %}
+  {% if consul_version is version_compare('0.6.1', '<') %}
     "ui_dir": "{{ consul_ui_dir }}",
   {% else %}
     "ui": true,

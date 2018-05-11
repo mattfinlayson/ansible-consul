@@ -49,7 +49,7 @@
     name={{consul_user}}
     group={{consul_group}}
     system=yes
-  when: consul_group_created|changed
+  when: consul_group_created is changed
 
 - name: create consul directory
   file: >
@@ -92,7 +92,7 @@
     src={{ consul_download_folder }}/{{ consul_archive }}
     dest={{ consul_home }}/bin
     copy=no
-  when: consul_was_downloaded|changed
+  when: consul_was_downloaded is changed
 
 - name: create TLS key
   no_log: True
@@ -137,7 +137,7 @@
     owner={{consul_user}}
     group={{consul_group}}
     recurse=yes
-  when: consul_was_downloaded|changed
+  when: consul_was_downloaded is changed
 
 - name: copy consul upstart script
   template: >
