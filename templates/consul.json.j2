@@ -65,7 +65,7 @@
 {% if consul_advertise_address is defined %}
   "advertise_addr": "{{ consul_advertise_address }}",
 {% endif %}
-{% if consul_advertise_address_wan|default(false) %}
+{% if consul_advertise_address_wan|default(false) and consul_advertise_address_wan != consul_advertise_address %}
   "advertise_addr_wan": "{{ consul_advertise_address_wan }}",
 {% endif %}
   "datacenter": "{{ consul_datacenter }}",
