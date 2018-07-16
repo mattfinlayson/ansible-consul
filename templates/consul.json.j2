@@ -1,6 +1,6 @@
 {
 {% if consul_is_ui == true %}
-  {% if consul_version | version_compare('0.6.1', '<') %}
+  {% if consul_version is version_compare('0.6.1', '<') %}
     "ui_dir": "{{ consul_ui_dir }}",
   {% else %}
     "ui": true,
@@ -65,7 +65,7 @@
 {% if consul_advertise_address is defined %}
   "advertise_addr": "{{ consul_advertise_address }}",
 {% endif %}
-{% if consul_advertise_address_wan|default(false) %}
+{% if consul_advertise_address_wan|default(false) and consul_advertise_address_wan != consul_advertise_address %}
   "advertise_addr_wan": "{{ consul_advertise_address_wan }}",
 {% endif %}
   "datacenter": "{{ consul_datacenter }}",
@@ -144,11 +144,14 @@
 {% if consul_statsite_prefix is defined %}
   "statsite_prefix": "{{ consul_statsite_prefix }}",
 {% endif %}
-{% if consul_telemetry_disable_hostname is defined %}
   "telemetry": {
+{% if consul_telemetry_disable_hostname is defined %}
     "disable_hostname": {{ "true" if consul_telemetry_disable_hostname else "false" }}
-  },
 {% endif %}
+{% if consul_telemetry_dogstatsd_addr is defined %}
+    "dogstatsd_addr": "{{ consul_telemetry_dogstatsd_address }}"
+{% endif %}
+  },
 {% if consul_cors_support is defined %}
   "http_api_response_headers": {
         "Access-Control-Allow-Origin": "*"

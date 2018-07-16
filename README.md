@@ -215,6 +215,8 @@ consul_statsite_address: "127.0.0.1:8125"
 consul_statsite_prefix: "consul"
 # if you don't want to prepend runtime telemetry with the machine's hostname (consul 0.6.4 or later)
 consul_telemetry_disable_hostname: true
+# if you want Consul to send metrics to a datadog
+consul_telemetry_dogstatsd_address: "127.0.0.1:8125"
 ```
 
 ## DNS Variables
