@@ -144,11 +144,14 @@
 {% if consul_statsite_prefix is defined %}
   "statsite_prefix": "{{ consul_statsite_prefix }}",
 {% endif %}
-{% if consul_telemetry_disable_hostname is defined %}
   "telemetry": {
+{% if consul_telemetry_disable_hostname is defined %}
     "disable_hostname": {{ "true" if consul_telemetry_disable_hostname else "false" }}
-  },
 {% endif %}
+{% if consul_telemetry_dogstatsd_addr is defined %}
+    "dogstatsd_addr": "{{ consul_telemetry_dogstatsd_address }}"
+{% endif %}
+  },
 {% if consul_cors_support is defined %}
   "http_api_response_headers": {
         "Access-Control-Allow-Origin": "*"
